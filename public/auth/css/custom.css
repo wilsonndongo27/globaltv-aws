@@ -1,0 +1,60 @@
+/*
+    Uniformiser la police
+*/
+@font-face {
+    src: url(./futura/Futura\ Book\ font.ttf);
+    font-family: FuturaStd;
+}
+@font-face {
+    src: url(./futura/Futura\ Bold\ font.ttf);
+    font-family: FuturaStd;
+    font-weight: bold;
+}
+body, header {
+    font-family: FuturaStd !important;
+}
+
+.adminloginbtn{
+    background-color: #534d99;
+}
+.blocklogininterface{
+    background-color: #fff;
+    color: #666;
+}
+.blocklogininterface h3{
+    color: #666 !important;
+    font-weight: bold;
+    text-align: center;
+}
+.blocklogininterface input{
+    background-color: #fff;
+    color: black;
+    border: none;
+    border-bottom: #eee solid 1px !important;
+    border-radius: 5px !important;
+}
+.blocklogininterface input:active{
+    background-color: #eee;
+    border: none;
+}
+.blocklogininterface input:focus{
+    background-color: #fff;
+    border: none;
+}
+.blocklogininterface span{
+    color: red;
+}
+.toast-success{
+    background-color: #534d99;
+}
+label, input, button{
+    font-size: 20px !important;
+}
+.form-group {
+    margin-top: 29px;
+}
+h3{
+    font-size: 35px;
+}
+
+

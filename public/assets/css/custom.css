@@ -1,0 +1,63 @@
+.logo-lg img{
+    height: 69px !important;
+}
+.addnew{
+    float: right;
+    background-color: #3209a3;
+    color: #fff;
+    font-weight: bold;
+}
+.addnew:hover{
+    background-color: #5e3cbd !important;
+    color: #fff;
+}
+.active>.page-link, .page-link.active{
+    background-color: #3209a3;
+}
+.btn-primary {
+    background-color: #3209a3 !important;
+}
+.hideviewpass{
+    position: absolute;
+    right: 22px;
+    top: 46px;
+}
+.imagecolumn img{
+    height: 40px;
+    width: 46px;
+}
+.toast-success{
+    background-color: green;
+}
+.toast-warning{
+    background-color: yellow;
+}
+.toast-error{
+    background-color: red;
+}
+#imagetoupdate{
+    width: 100% !important;
+}
+#videotoupdate{
+    width: 100% !important;
+}
+.sa-confirm-button-container .confirm{
+    background-color: #3209a3;
+}
+.activeitem{
+    color: #f06548;
+    background-color: #eee;
+    padding: 8px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+.btn-info{
+    background-color: #3209a3 !important;
+}
+.videoitem{
+    width: 50%;
+    height: 84px;
+}
+.audioitem{
+    width: 100%;
+}

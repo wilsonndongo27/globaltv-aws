@@ -1,0 +1,957 @@
+/*
+    Uniformiser la police
+*/
+@font-face {
+    src: url(./futura/Futura\ Book\ font.ttf);
+    font-family: FuturaStd;
+}
+@font-face {
+    src: url(./futura/Futura\ Bold\ font.ttf);
+    font-family: FuturaStd;
+    font-weight: bold;
+}
+body, header {
+    font-family: FuturaStd !important;
+    background-color: #fff !important;
+}
+
+.logo{
+    height: 60px;
+    width: 150px;
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+.itemheader{
+    font-size: 16px;
+    padding-left: 50px !important;
+}
+.navitemblock{
+    max-height: 70px;
+    margin-left: auto;
+}
+.logosearch1{
+    font-size: 20px;
+    margin-right: 7px;
+}
+.logosearch2{
+    font-size: 35px;
+    margin-right: -7px;
+}
+.searchinput{
+    border: none;
+    position: absolute;
+    left: 10px;
+    width: 96%;
+    height: 46px;
+    top: 11px;
+}
+.fixedblock{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.infoflash{
+    height: 33px;
+    border-radius: unset;
+}
+.blockmonaislive{
+    margin-top: 5px;
+}
+.defiler{
+    margin-top: -20px;  
+    margin-left: 5%;   
+    display: flex;        
+}
+.defiler marquee{
+    font-size: 12px;        
+}
+.defiler marquee span{
+    margin-left: 10px;       
+}
+.separationhead{
+    border-left: #eee solid 2px;
+}
+.blocktemperature{
+    margin-left: 40px;
+    display: flex;
+    margin-top: -7px;
+}
+.blocktemperature span{
+    margin-left: 16px;
+    font-size: 13px;
+}
+.monnaistitle{
+    font-weight: bold;
+    font-size: 17px !important;
+}
+.submenusblock{
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+    height: 350px;
+    display: flex;
+    background-color: #fff;
+}
+.imagesubmenu{
+    width: 50%;
+    height: 132px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.blocsubmenu{
+    padding-left: 17px;
+}
+.itemcover{
+    border: #eee solid 1px;
+    display: flex;
+    padding: 37px;
+    margin: 10px;
+    border-radius: 5px;
+}
+.blocsubmenu a{
+    color: #666;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+}
+.blocsubmenu a:hover{
+    color: #5981db;
+}
+.itemheader{
+    font-weight: bold;
+    color: #666;
+    font-size: 18px;
+}
+.navbar-light{
+    background-color: #fff;
+}
+
+/**TRANSITION**/
+.fadeOut{
+    opacity:0;
+    width:0;
+    height:0;
+    transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+}
+.fadeIn{
+    opacity:1;
+    width:100px;
+    height:100px;
+    transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+}
+
+
+/* Block live **/
+
+.containerlive{
+    height: 287px;
+    background-color: #2f2574;
+    position: absolute;
+    width: -webkit-fill-available;
+    z-index: 999;
+}
+.containerlivehide {
+    height: 38px;
+    background-color: #2f2574;
+}
+.blocklive1{
+   background-color: #534d99;
+   height: 250px;   
+}
+.blocklive2{
+    height: 250px;
+    background-color: #2f2574; 
+}
+.blockliveleft{
+    margin-top: 50px !important;
+}
+.livereader{
+    height: 192px;
+    background-color: black;
+    width: 38%;
+    margin-left: 92px;
+}
+.infosinstant{
+    margin-left: 50px;
+    width: 30%;
+    color: #fff;
+}
+.fixlive1{
+    background-color: #534d99;
+    height: 37px;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    width: 52%;
+}
+.fixlive2{
+    height: 37px;
+    background-color: #2f2574;
+    width: 48%;
+}
+.iconhidelive{
+    color: #fff;
+    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    margin-top: 9px;
+}
+
+.fixlive1 p{
+    position: absolute;
+    left: 25%;
+    top: 107px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
+.liveiconupsimple{
+    font-size: 15px;
+    color: #bfbfbf;
+}
+.fixlive1 span{
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #bfbfbf;
+}
+.fixlive1textshow{
+    display: block;
+}
+.fixlive1texthide{
+    display: none;
+}
+
+.fixlive2 p{
+    position: absolute;
+    right: 25%;
+    top: 107px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
+.liveiconupsimple{
+    font-size: 15px;
+    color: #bfbfbf;
+}
+.fixlive2 span{
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #bfbfbf;
+}
+.fixlive1textshow{
+    display: block;
+}
+.fixlive1texthide{
+    display: none;
+}
+
+
+
+
+/* Core Component  css**/
+.bodyblock1{
+    min-height: 200px;
+    margin-top: 20px;
+}
+.bodyblock2{
+    height: auto;
+    margin-top: 20px;
+}
+.bodyblock3{
+    min-height: 200px;
+    margin-top: 20px;
+}
+.bodyitemblock{
+    margin-top: 30px;
+}
+.titlecore{
+    font-weight: bold;
+    color: #666;
+}
+.imagebanner{
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.timeblockbanner{
+    margin-top: 20px;
+}
+.timeblockbanner p span{
+    padding: 10px;
+}
+.timeblockbanner p span img{
+    width: 22px !important;
+    height: auto !important;
+    border-radius: 100%;
+}
+.titlebanner{
+    padding: 10px;
+}
+.titlebanner p{
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #666;
+}
+.titlebanner p:hover{
+    color: #5981db;
+}
+
+
+/**List News block*/
+.newslist ul li{
+    list-style: none;
+}
+.newslist ul li a{
+    text-decoration: none;
+    font-size: 17px;
+    color: #444;
+    font-weight: bold;
+    padding: 10px;
+}
+.newslist ul li a:hover{
+    color: #5981db;
+}
+.newslist ul li span{
+    padding: 10px;
+}
+.newslist ul li span img{
+    width: 22px !important;
+    height: auto !important;
+    border-radius: 100%;
+}
+.allactubtn{
+    width: 100%;
+    font-size: 17px;
+    border: #eee solid 1px;
+}
+.blockbtnallactu{
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.blockslidebtninfo{
+    position: absolute;
+    right: 8px;
+    margin-top: -41px;
+}
+.blockslidebtninfo svg{
+    font-size: 43px;
+    padding: 5px;
+    cursor: pointer;
+}
+.imageactu{
+    width: 100%;
+    border: #eee solid 1px;
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 190px;
+}
+
+
+/**Blogger Banner*/
+.bloggerblock{
+    height: auto;
+    margin-top: 45px;
+}
+.imageblogger{
+    width: 100%;
+    cursor: pointer;
+}
+
+
+/*Block Interview*/
+.interviewblock{
+    margin-top: 70px;
+    margin-bottom: 50px;
+}
+.listinterviewcontainer{
+    margin-top: 15px;
+}
+.interviewheaderblock{
+    display: flex;
+}
+.interviewheaderblock h4{
+    font-weight: bold;
+    color: #666;
+}
+.categorieinterview{
+    margin-left: 10px;
+}
+.categorieinterview ul{
+    display: flex;  
+    margin-top: 1px;
+}
+.categorieinterview ul li{
+    list-style: none;
+    padding-left: 10px;
+}
+.categorieinterview ul li a{
+    text-decoration: none;
+    color: #666;
+    font-size: 16px;
+}
+.categorieinterview ul li a:hover{
+    color: #5981db;
+    font-weight: 500;
+}
+.categorieactivebar{
+    border-bottom: #534d99 solid 2px;
+}
+.detailinterview{
+    border-bottom: #eee solid 2px;
+    margin-bottom: 18px;
+}
+.detailinterview p span img{
+    width: 22px !important;
+    height: auto !important;
+    border-radius: 100%;
+}
+.detailinterview p span{
+    padding: 10px;
+}
+.imageinterviewitem{
+    width: 100%;
+    border: #eee solid 1px;
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 190px;
+}
+.listinterviewcontainer ul{
+    padding: 0px;
+}
+.listinterviewcontainer ul li{
+    display: flex;
+}
+.blockimageinterviewitem{
+    width: 45%;
+    margin-right: 30px;
+    margin-bottom: 40px;
+}
+.detailinterview a{
+    text-decoration: none;
+    font-size: 18px;
+    color: #444;
+    font-weight: bold;
+    padding-left: 10px;
+}
+.detailinterview a:hover{
+    color: #5981db;
+}
+.allinterviewbtn{
+    width: 100%;
+    font-size: 17px;
+    border: #eee solid 1px;
+}
+
+/**Block Programme TV*/
+.tvprogramblock{
+    margin: 0;
+}
+.hearderblockprogramtv{
+    display: flex;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
+.hearderblockprogramtv h4{
+    color: #666;
+    font-weight: bold;
+}
+.hearderblockprogramtv a{
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: 78%;
+    color: #666;
+    font-weight: bold;
+}
+.hearderblockprogramtv a span svg{
+    font-size: 20px;
+    margin-top: -4px;
+}
+.imageprogrammetv{
+    width: 100%;
+    cursor: pointer;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    max-height: 200px;
+}
+.itemprogram{
+    margin-bottom: 10px;
+}
+.itemprogram a{
+    text-decoration: none;
+    font-size: 18px;
+    color: #666;
+    font-weight: bold;
+    padding: 16px;
+}
+.itemprogram a:hover{
+    color: #5981db;
+}
+
+/*Block Podcast**/
+.podcastblock{
+    margin-top: 55px;
+    margin-bottom: 50px;
+}
+.imagepodcast{
+    width: 100%;
+    cursor: pointer;
+}
+
+/*Block World Digital**/
+.blockworlddigital{
+    margin: 0;
+}
+.blockheadworlddigital{
+    margin-top: 10px;
+    display: flex;
+}
+.hearderblockprogramtv h4{
+    color: #666;
+    font-weight: bold;
+}
+.blockheadworlddigital h4 svg{
+    font-size: 30px;
+}
+.blockheadworlddigital h4 span{
+    margin-left: 10px;
+    font-weight: bold;
+    color: #666;
+}
+.blockchangeslideworlddigital{
+    margin-left: 79%;
+}
+.blockchangeslideworlddigital svg{
+    font-size: 27px;
+    margin-right: 3px;
+}
+.imagewolddigitaltv{
+    cursor: pointer;
+}
+.blockwolddigitaltv{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.footeritemdigitalworld{
+    padding: 10px;
+}
+.footeritemdigitalworld a{
+    font-size: 16px;
+    text-decoration: none;
+    color: #666;
+    font-weight: bold;
+}
+.footeritemdigitalworld p span img{
+    width: 22px !important;
+    height: auto !important;
+    border-radius: 100%;
+    margin-right: 7px;
+}
+.footeritemdigitalworld p{
+    margin-top: 10px;
+    margin-bottom: 9px;
+}
+.footeritemdigitalworld p span svg{
+    font-size: 25px;
+    color: #666;
+}
+
+
+/**Footer block css*/
+.mainblockfooter{
+    margin: 0;
+    background-color: #534d99;
+}
+.firstlinefooterblock{
+    display: flex;
+    padding-top: 40px;
+}
+.firstlinefooterblock p{
+    margin-bottom: 5px !important;
+    color: #fff;
+    font-size: 17px;
+}
+.firstlinefooterblock h4{
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+.languagefooter{
+    display: flex;
+}
+.languagefooter p{
+    padding: 5px;
+}
+.socialfooter svg{
+    font-size: 25px;
+    margin: 6px;
+    color: #fff;
+}
+.downloadappfooter a{
+    border: #eee solid 1px;
+    color: #fff;
+    margin: 5px;
+}
+.downloadappfooter a:hover{
+    background-color: #fff; 
+    color: #666;
+}
+.copyright{
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
+.copyright span{
+    color: #534d99;
+}
+
+
+/**Block Actualité **/
+.actuitem img {
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.actuitem p span img{
+    width: 22px !important;
+    height: auto !important;
+    border-radius: 100%;
+}
+.actuitem p{
+    padding: 15px;
+}
+.actuitem p span{
+    margin-left: 0px;
+}
+.titleactu{
+    padding-left: 16px;
+    margin-top: -30px;
+    padding: 16px
+}
+.titleactu a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #666;
+    font-size: 18px;
+}
+.titleactu a:hover{
+    color: #5981db;
+}
+.titleactu p{
+    padding-left: 16px;
+    margin-top: -30px;
+    font-weight: bold;
+}
+.timeactu svg{
+    font-size: 15px;
+    color: #666;
+}
+.allactulifebtn{
+    width: 100%;
+    font-size: 17px;
+    border: #eee solid 1px;
+}
+.blockbtnallactulife{
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.blockpub{
+    margin-top: 20px;
+    position: sticky;
+}
+.imagepub{
+    width: 100%
+}
+
+/***Project block**/
+.projectitem img {
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.projectitem p span img{
+    width: 22px !important;
+    height: auto !important;
+    border-radius: 100%;
+}
+.projectitem p{
+    padding: 15px;
+}
+.projectitem p span{
+    margin-left: 0px;
+}
+.titleproject{
+    padding-left: 16px;
+    margin-top: -30px;
+    padding: 16px
+}
+.titleproject a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #666;
+    font-size: 18px;
+}
+.titleproject a:hover{
+    color: #5981db;
+}
+.timeproject svg{
+    font-size: 27px;
+    color: #666;
+}
+.allprojectbtn{
+    width: 100%;
+    font-size: 17px;
+    border: #eee solid 1px;
+}
+.blockbtnallproject{
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+/*********Detail page block*******/
+.imagedetail{
+    width: 100%;
+}
+.blockdetail h4{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.blockdetail svg{
+    font-size: 20px;
+}
+.imageflag{
+    width: 22px !important;
+    height: auto !important;
+    border-radius: 100%;
+}
+.blockdetail span{
+    color: #666;
+}
+.descriptionarticle{
+    margin-top: 27px;
+    margin-bottom: 30px;
+}
+.footerdetail{  
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 5px;
+    padding-left: 5px;
+    border-bottom: #eee solid 1px;
+    border-top: #eee solid 1px;
+}
+.footerdetail svg{  
+    cursor: pointer;
+    margin-top: -6px;
+}
+.backtext{
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.numberitem{
+    font-size: 16px;
+    position: absolute;
+    margin-top: 21px;
+    margin-left: -14px;
+}
+.commentinput{
+    border: #eee solid 1px;
+    width: 100%;
+    padding: 9px;
+}
+.blockcomment{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.btncomment{
+    margin-left: 80%;
+    border: #eee solid 1px;
+}
+.btncomment svg{
+    margin-left: 5px;
+}
+.avatar{
+    width: 70px;
+    height: 50px;
+    border-radius: 100%;
+    margin-top: 10px;
+}
+.titlecomment{
+    color: #666;
+    border-bottom: #eee solid 1px;
+}
+.blocklistcomment{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.contentcomment p{
+    border-bottom: #eee solid 1px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+}
+.separatorcomment{
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #c9c9c9;
+}
+
+
+/**Block Connexe****/
+.blockconnexe{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.connexeitemblock span{
+    color: #666;
+    margin-top: 10px;
+}
+.connexeitemblock p{
+    color: #666;
+    font-size: 19px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.imageconnexe{
+    width: 100%;
+    margin-bottom: 15px;
+    max-height: 163px;
+}
+.blockconnexe h4{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #666;
+}
+.btnmoreconnexe{
+    width: 100%;
+    font-size: 17px;
+    border: #eee solid 1px;
+}
+.connexetitle{
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+.connexetitle a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #666;
+    font-size: 18px;
+}
+.connexetitle a:hover{
+    color: #5981db;
+}
+
+
+
+/**Block css Lists**/
+.blocklist{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.paysblock{
+    max-height: 300px;
+    margin-bottom: 20px;
+}
+.themeblock{
+    max-height: 300px;
+    margin-bottom: 20px;
+}
+.checkboxpays{
+    padding-top: 16px;
+    overflow:auto;
+}
+.titlefilterlist{
+    font-size: 18px;
+    color: #666;
+    font-weight: bold;
+}
+.itempays{
+    display: flex;
+}
+.itempays img{
+    width: 50px !important;
+    height: 20px!important;
+    border-radius: 100%;
+    margin-top: -3px;
+}
+.itempays input{
+    height: 23px;
+}
+.itempays p{
+    font-size: 16px;
+    margin-top: -3px;
+}
+.itemtheme{
+    display: flex;
+}
+.itemtheme input{
+    height: 23px;
+}
+.checkboxtheme{
+    padding-top: 16px;
+    overflow: auto;
+}
+.itemtheme p{
+    font-size: 16px;
+}
+.titlelist{
+    font-size: 32px;
+    font-weight: bold;
+    color: #666;
+}
+.imagelist{
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;   
+    cursor: pointer;
+    max-height: 110px;
+}
+.listtitle{
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+.listtitle a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #666;
+    font-size: 18px;
+}
+.listtitle a:hover{
+    color: #5981db;
+}
+.footerlist{
+    margin: 10px;
+    font-size: 13px;
+    color: #666;
+}
+.blocklangue{
+    position: absolute;
+    right: 11px;
+    top: 2px;
+    z-index: 999;
+}
+.menulangue{
+    background-color: #fff;
+    padding: 5px
+}
+.menulangue ul li{
+    text-decoration: none;
+    text-transform: none;
+}
+.menulangue ul li a{
+    color: #666;
+}
+.menulangue ul li a:hover{
+    color:#5981db;
+}
+.monnaistitle svg{
+    color: #666;
+}
+
+
+

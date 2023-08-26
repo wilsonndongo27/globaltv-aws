@@ -1,0 +1,94 @@
+@media (max-width: 1200px) {
+
+}
+
+@media (min-width: 992px) {
+   
+}
+
+@media (max-width: 991px) {
+
+}
+
+@media (min-width: 768px) {
+    
+}
+
+@media (max-width: 767px) {
+
+}
+
+@media (max-width: 480px) {
+    .blocktemperature{
+        display: none;
+    }
+    .defiler {
+        margin-top: -23px;
+        margin-left: 18%;
+        margin-right: 24%;
+    }
+    .fixlive1{
+        width: 100%;
+        height: 0px;
+    }
+    .fixlive2{
+        display: none;
+    }
+    .iconhidelive {
+        left: 92%;
+    }
+    .blocklive2{
+        display: none;
+    }
+    .livereader{
+        height: 179px;
+        width: 60%;
+        margin-top: -17px;
+    }
+    .infosinstant{
+        width: 77%;
+        display: flex;
+        margin-top: 14px;
+    }
+    .infosinstant h4{
+        font-size: 16px;
+        margin-left: 10px;
+    }
+    .descriptionlive{
+        display: none;
+    }
+    .blockpub {
+        margin-bottom: 21px;
+    }
+    .fixlive1 p {
+        display: none;
+    }
+    .categorieinterview {
+        overflow: auto;
+    }
+    .hearderblockprogramtv {
+        margin-bottom: 12px;
+        margin-top: 27px;
+        padding-bottom: 3px;
+    }
+    .hearderblockprogramtv a {
+        margin-left: 32%;
+    }
+    .blockheadworlddigital {
+        display: block;
+    }
+    .blockchangeslideworlddigital {
+        margin-left: 83%;
+        margin-top: -39px;
+    }
+    .itemwolddigital{
+        margin-bottom: 12px;
+    }
+    .firstlinefooterblock {
+        display: block;
+    }
+}
+
+
+
+
