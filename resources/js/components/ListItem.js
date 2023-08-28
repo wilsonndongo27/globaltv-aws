@@ -4,8 +4,11 @@ import {connect} from 'react-redux';
 import  '../assets/css/style.css';
 import  '../assets/css/responsive.css';
 import ReactCountryFlag from "react-country-flag"
+import * as Icon from 'react-bootstrap-icons';
 import {BaseUrl} from '../api/config';
 import {detailViewAction, DetailSwicht, ListSwicht} from '../reducers/actions'
+import Moment from 'moment';
+import 'moment/locale/fr';
 
 class ListItem extends Component {
     constructor(props){
@@ -33,43 +36,6 @@ class ListItem extends Component {
         return num.toString().padStart(2, '0');
     }
 
-    _formatDate = (date) => {
-        return [
-            this._padTo2Digits(date.getDate()),
-            this._padTo2Digits(date.getMonth() + 1),
-            date.getFullYear(),
-        ].join('.');
-    }
-
-    _formatHour = (data) => {
-        var minute = data.getUTCMinutes();
-        var hour = data.getUTCHours();
-        if(minute > 0)  
-            return hour+"."+minute;
-        else
-            return hour;
-    }
-
-    _getCountry = (data) => {
-        const {allpays} = this.props;
-        var filteritem = allpays.filter(function (item) {
-            if(item.id == data){
-                return item;
-            }
-        });
-        return filteritem[0].abreviation;
-    }
-
-    _getCategorie = (data) => {
-        const {allcategories} = this.props;
-        var filteritem = allcategories.filter(function (item) {
-            if(item.id == data){
-                return item;
-            }
-        });
-        return filteritem[0].title;
-    }
-
     render() {
         const {item, key, listpagekey} = this.props;
         return (
@@ -77,7 +43,7 @@ class ListItem extends Component {
                     <div className='card'>
                         {
                             !item.video ?
-                                <img src={BaseUrl +'/storage/'+ item.image} className='imagelist' />
+                                <img src={BaseUrl +'/storage/'+ item.cover} className='imagelist' />
                             :
                                 <video className='imagelist' controls controlsList="nodownload">
                                     <source src={BaseUrl +'/storage/'+ item.video} type="video/mp4"/>
@@ -85,16 +51,15 @@ class ListItem extends Component {
                         }
                         <div className='footerlist'>
                             <div className='listtitle'>
-                                <a href='#' onClick={this._toggleDetail.bind(this, item.id, listpagekey)} >{item.title}</a>
+                                <a href='#' onClick={this._toggleDetail.bind(this, item, listpagekey)} >{item.title}</a>
                             </div>
                             {
                                 listpagekey == 3 || listpagekey == 4 ?
                                     null
                                 :
-                                    <div className='row'>
-                                        <div className='col-lg-2'><ReactCountryFlag countryCode={this._getCountry(item.origine)} svg  /></div>
-                                        <div className='col-lg-5'> {this._formatDate(new Date(item.created_at))}</div>
-                                        <div className='col-lg-4'> {this._formatHour(new Date(item.created_at))}</div>
+                                    <div className='footerlisttime'>
+                                        <div>{item.country}</div> <Icon.Dot/>
+                                        <div> {Moment(item.created_at).fromNow()}</div>
                                     </div>
                             }
                             
@@ -115,8 +80,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         visibleList:state.navigation.visibleList,
         visibleDetail:state.navigation.visibleDetail,
-        allcategories: state.dataManager.homedata.allcategories,
-        allpays: state.dataManager.homedata.allpays,
     }
   }
 

@@ -60,7 +60,7 @@ class UserController extends Controller
     public function index(){
         if($this->can_access() == true){
             $countries = Country::get(["name","id"]);
-            $users = User::all();
+            $users = User::orderBy('created_at', 'DESC')->get();
             $allusers = array();
             foreach ($users as $item) {
                 $country = Country::where('id', $item->country)->first();

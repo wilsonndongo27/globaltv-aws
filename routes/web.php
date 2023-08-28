@@ -24,9 +24,9 @@ use App\Http\Controllers\Backend\InterviewController;
 | contains the 'web' middleware group. Now create something great!
 |
 */
-// Route::get('/{path?}', function () {
-//     return view('frontend.front');
-// })->where('path', '.*');
+Route::get('/', function () {
+     return view('frontend.front');
+})->where('path', '.*');
 
 
 /**AUTH MANGEMENT */

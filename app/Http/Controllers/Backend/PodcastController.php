@@ -44,7 +44,7 @@ class PodcastController extends Controller
     public function index()
     {
         if($this->can_access() == true || $this->can_access_admin() == true){
-            $podcasts = Podcast::all();
+            $podcasts = Podcast::orderBy('created_at', 'DESC')->get();
             $allpodcast = array();
             foreach ($podcasts as $item) {
                 $author = User::where('id', $item->author)->first();

@@ -44,7 +44,7 @@ class ReplayController extends Controller
     public function index()
     {
         if($this->can_access() == true || $this->can_access_admin() == true){
-            $replays = Replay::all();
+            $replays = Replay::orderBy('created_at', 'DESC')->get();
             $allreplay = array();
             foreach ($replays as $item) {
                 $author = User::where('id', $item->author)->first();

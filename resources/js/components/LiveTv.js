@@ -5,6 +5,7 @@ import  '../assets/css/style.css';
 import * as Icon from 'react-bootstrap-icons';
 import FadeIn from 'react-fade-in';
 import {LiveSwicht} from '../reducers/actions';
+import FadeInOut from '../utils/FadeInOut';
 
 
 class LiveTV extends Component {
@@ -38,7 +39,7 @@ class LiveTV extends Component {
             <div className={this.state.cssblocklive}>
                 {
                     visibleLive ?
-                        <FadeIn delay='100' transitionDuration='1000' >
+                        <FadeInOut show={visibleLive} duration={1000} >
                             <div className="row togglemenu">
                                 <div className="col-lg-6 blocklive1">
                                     <div className='row blockliveleft'>
@@ -63,7 +64,7 @@ class LiveTV extends Component {
                                     </div>
                                 </div>
                             </div>
-                        </FadeIn>
+                        </FadeInOut>
                        
                     :null
                 }
@@ -75,10 +76,14 @@ class LiveTV extends Component {
                             Les Oiseaux de Mer Partie 1
                         </p>
                         {
-                            this.state.liveVisible ?
-                                <Icon.ArrowUpCircle className='iconhidelive' onClick={this._toggleLive}/>
+                            visibleLive ?
+                                <div className='liveiconhideblock'>
+                                    <Icon.ArrowUpCircle className='iconhidelive' onClick={this._toggleLive}/>
+                                </div>
                             :
-                                <Icon.ArrowDownCircle className='iconhidelive' onClick={this._toggleLive}/>
+                                <div className='liveiconhideblock'>
+                                    <Icon.ArrowDownCircle className='iconhidelive' onClick={this._toggleLive}/>
+                                </div>
 
                         }
                     </div>

@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use App\Http\Resources\{ReplayResource, NewsResource, BannerResource, ProgramResource, PodcastResource, StreamResource};
-use App\Models\{Replay, Program, Banner, Podcast, Stream, News};
+use App\Http\Resources\{ReplayResource, NewsResource, BannerResource, ProgramResource, PodcastResource, StreamResource, InterviewResource};
+use App\Models\{Replay, Program, Banner, Podcast, Stream, News, Category, Interview};
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -59,6 +59,12 @@ class HomeAPI extends Controller
             ->paginate(5)
         );
 
+        $allinterview = InterviewResource::collection(
+            Interview::where('is_active', 1)
+            ->where('is_valid', 1)
+            ->OrderBy('created_at', 'DESC')
+            ->paginate(5)
+        );
 
         return response([ 
             'status' => 200,
@@ -68,6 +74,7 @@ class HomeAPI extends Controller
             'allpodcast' => $allpodcast,
             'allstream' => $allstream,
             'allnews' => $allnews,
+            'allinterview' => $allinterview,
             'message' => 'Opération réussi!',
         ]);
     }

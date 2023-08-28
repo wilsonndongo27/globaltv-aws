@@ -64,8 +64,8 @@
                                         alt="{{$item->cover}}" alt="" />
                                     </a>
                                 </td>
-                                <td>{{ $item->title }}</td>
-                                <td>{{ $item->label }}</td>
+                                <td>{{ Str::limit($item->title, 20, '...') }}</td>
+                                <td>{{ Str::limit($item->label, 20, '...') }}</td>
                                 <td>{{ $item->program }}</td>
                                 <td>
                                     <audio controls class="audioitem">
@@ -188,7 +188,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Création de Podcast</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="createform" lpformnum="1"  method="post" enctype="multipart/form-data" onsubmit="postSubmission()" action="{{ route ('create-podcast')}}">
+                <form class="" lpformnum="1"  method="post" enctype="multipart/form-data" onsubmit="postSubmission()" action="{{ route ('create-podcast')}}">
                     <div class="modal-body">
                         @csrf
                         <input type="hidden" name="author" value="{{Auth::user()->id}}">

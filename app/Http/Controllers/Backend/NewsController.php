@@ -44,7 +44,7 @@ class NewsController extends Controller
     public function index()
     {
         if($this->can_access() == true || $this->can_access_admin() == true){
-            $news = News::all();
+            $news = News::orderBy('created_at', 'DESC')->get();
             $allnews = array();
             foreach ($news as $item) {
                 $author = User::where('id', $item->author)->first();

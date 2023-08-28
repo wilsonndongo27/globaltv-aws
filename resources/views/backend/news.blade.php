@@ -64,8 +64,8 @@
                                         alt="{{$item->cover}}" alt="" />
                                     </a>
                                 </td>
-                                <td>{{ Str::limit($item->title, 100, '...') }}</td>
-                                <td>{{ $item->label }}</td>
+                                <td>{{ Str::limit($item->title, 20, '...') }}</td>
+                                <td>{{ Str::limit($item->label, 20, '...') }}</td>
                                 <td>{{ $item->category }}</td>
                                 <td>{{ $item->country }}</td>
                                 <td>
@@ -151,7 +151,7 @@
                         @endforeach
                     @else
                         <tr >
-                            <td colspan="7" class="text-primary text-center" >
+                            <td colspan="12" class="text-primary text-center" >
                                 <p style="font-size: 14px; margin-top:50px; color:#888">Aucune Actualité enregistré pour l'instant!</p>
                             </td>
                         </tr>

@@ -44,7 +44,7 @@ class BannerController extends Controller
     public function index()
     {
         if($this->can_access() == true || $this->can_access_admin() == true){
-            $banners = Banner::all();
+            $banners = Banner::orderBy('created_at', 'DESC')->get();
             $allbanner = array();
             foreach ($banners as $item) {
                 $author = User::where('id', $item->author)->first();

@@ -44,7 +44,7 @@ class CategoryController extends Controller
     public function index()
     {
         if($this->can_access() == true || $this->can_access_admin() == true){
-            $categories = Category::all();
+            $categories = Category::orderBy('created_at', 'DESC')->get();
             $allcategory = array();
             foreach ($categories as $item) {
                 $author = User::where('id', $item->author)->first();

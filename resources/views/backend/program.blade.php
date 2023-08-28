@@ -67,8 +67,8 @@
                                         alt="{{$item->cover}}" alt="" />
                                     </a>
                                 </td>
-                                <td>{{ $item->title }}</td>
-                                <td>{{ $item->day }}</td>
+                                <td>{{ Str::limit($item->title, 20, '...') }}</td>
+                                <td>{{ Str::limit($item->day, 20, '...') }}</td>
                                 <td>{{ $item->time_start }}</td>
                                 <td>{{ $item->time_end }}</td>
                                 <td>{{ $item->date }}</td>

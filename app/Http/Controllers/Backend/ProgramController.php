@@ -44,7 +44,7 @@ class ProgramController extends Controller
     public function index()
     {
         if($this->can_access() == true || $this->can_access_admin() == true){
-            $programs = Program::all();
+            $programs = Program::orderBy('created_at', 'DESC')->get();
             $allprogram = array();
             foreach ($programs as $item) {
                 $author = User::where('id', $item->author)->first();

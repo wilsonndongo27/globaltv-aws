@@ -61,7 +61,7 @@
                                         alt="{{$item->cover}}" alt="" />
                                     </a>
                                 </td>
-                                <td>{{ $item->title }}</td>
+                                <td>{{ Str::limit($item->title, 20, '...') }}</td>
                                 <td>{{ $item->program }}</td>
                                 <td>
                                     <video controls class="videoitem">

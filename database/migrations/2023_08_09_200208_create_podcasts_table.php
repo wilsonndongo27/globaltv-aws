@@ -17,7 +17,6 @@ class CreatePodcastsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('author');
             $table->foreignId('advertizing')->nullable();
-            $table->foreignId('program');
             $table->foreignId('country');
             $table->string('title');
             $table->string('label')->nullable();

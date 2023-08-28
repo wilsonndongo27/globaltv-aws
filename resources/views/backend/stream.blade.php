@@ -42,7 +42,7 @@
                 <tbody>
                     @if ($allstream ?? '')
                         @foreach ($allstream as $item)
-                                <td>{{ $item->title }}</td>
+                                <td>{{ Str::limit($item->title, 20, '...') }}</td>
                                 <td>{{ $item->link }}</td>
                                 <td>{{ $item->author }}</td>
                                 <td>

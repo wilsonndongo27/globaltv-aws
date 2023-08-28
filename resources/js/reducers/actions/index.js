@@ -28,7 +28,7 @@ export const homeActionData = () =>
 {
     try {
         store.dispatch({type:IS_LOADING, value:true});
-        fetch(`${BaseUrl}/api/login`, dataAuth)
+        fetch(`${BaseUrl}/api/auth`, dataAuth)
         .then((res) => res.json())
         .then((resJson) => {
             if(resJson.access_token){
@@ -36,7 +36,7 @@ export const homeActionData = () =>
                 const nextData = {
                     method: 'GET',
                     headers: {
-                        'Content-type': 'application/json',
+                        'content-type': 'application/json',
                         'Authorization': `Bearer ${resJson.access_token}`,
                     }
                 }
@@ -63,7 +63,7 @@ export const listViewAction = (data) =>
 {
     try {
         store.dispatch({type:IS_LOADING, value:true});
-        fetch(`${BaseUrl}/api/login`, dataAuth)
+        fetch(`${BaseUrl}/api/auth`, dataAuth)
         .then((res) => res.json())
         .then((resJson) => {
             if(resJson.access_token){
@@ -71,7 +71,7 @@ export const listViewAction = (data) =>
                 const nextData = {
                     method: 'GET',
                     headers: {
-                        'Content-type': 'application/json',
+                        'content-type': 'application/json',
                         'Authorization': `Bearer ${resJson.access_token}`,
                     }
                 }
@@ -115,7 +115,7 @@ export const listViewAction = (data) =>
                 }
 
                 if(data.key == 4){
-                    fetch(`${BaseUrl}/api/replay-programme/${data.item}`, nextData)
+                    fetch(`${BaseUrl}/api/replay-program/${data.item}`, nextData)
                     .then((res) => res.json())
                     .then((resJson) => {
                         store.dispatch({type:IS_LOADING, value:false});
@@ -141,59 +141,31 @@ export const detailViewAction = (data) =>
 {
     try {
         store.dispatch({type:IS_LOADING, value:true});
-        fetch(`${BaseUrl}/api/login`, dataAuth)
-        .then((res) => res.json())
-        .then((resJson) => {
-            if(resJson.access_token){
-                store.dispatch({type:INFO_AUTH, value:resJson });
-                const nextData = {
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': `Bearer ${resJson.access_token}`,
-                    }
-                }
-                if(data.key == 1){
-                    fetch(`${BaseUrl}/api/detail-news/${data.item}`, nextData)
-                    .then((res) => res.json())
-                    .then((resJson) => {
-                        store.dispatch({type:IS_LOADING, value:false});
-                        store.dispatch({
-                            type:DETAIL_VIEW,
-                            value:resJson
-                        })
-                        store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
-                    })
-                }
-                if(data.key == 2){
-                    fetch(`${BaseUrl}/api/detail-interview/${data.item}`, nextData)
-                    .then((res) => res.json())
-                    .then((resJson) => {
-                        store.dispatch({type:IS_LOADING, value:false});
-                        store.dispatch({
-                            type:DETAIL_VIEW,
-                            value:resJson
-                        })
-                        store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
-                    })
-                }
+        if(data.key == 1){
+            store.dispatch({type:IS_LOADING, value:false});
+            store.dispatch({
+                type:DETAIL_VIEW,
+                value:data.item
+            })
+            store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
+        }
+        if(data.key == 2){
+            store.dispatch({type:IS_LOADING, value:false});
+            store.dispatch({
+                type:DETAIL_VIEW,
+                value:data.item
+            })
+            store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
+        }
 
-                if(data.key == 4){
-                    fetch(`${BaseUrl}/api/detail-replay/${data.item}`, nextData)
-                    .then((res) => res.json())
-                    .then((resJson) => {
-                        store.dispatch({type:IS_LOADING, value:false});
-                        store.dispatch({
-                            type:DETAIL_VIEW,
-                            value:resJson
-                        })
-                        store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
-                    })
-                }
-              
-               
-            }
-        })
+        if(data.key == 4){
+            store.dispatch({type:IS_LOADING, value:false});
+            store.dispatch({
+                type:DETAIL_VIEW,
+                value:data.item
+            })
+            store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
+        }
         
     } catch (err) {
         store.dispatch({type:IS_LOADING, value:true});

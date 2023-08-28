@@ -44,7 +44,7 @@ class InterviewController extends Controller
     public function index()
     {
         if($this->can_access() == true || $this->can_access_admin() == true){
-            $interviews = Interview::all();
+            $interviews = Interview::orderBy('created_at', 'DESC')->get();
             $allinterview = array();
             foreach ($interviews as $item) {
                 $author = User::where('id', $item->author)->first();

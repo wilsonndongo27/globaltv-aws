@@ -13,6 +13,10 @@ import ReactCountryFlag from "react-country-flag"
 import Details from '../screens/Details';
 import {BaseUrl} from '../api/config';
 import {ListSwicht, listViewAction, detailViewAction, DetailSwicht} from '../reducers/actions'
+import { useNavigate } from 'react-router-dom';
+import Moment from 'moment';
+import 'moment/locale/fr';
+import CountryData from "country-data";
 
 class Core extends Component {
     constructor(props){
@@ -59,88 +63,41 @@ class Core extends Component {
         return num.toString().padStart(2, '0');
     }
 
-    _formatDate = (date) => {
-        return [
-            this._padTo2Digits(date.getDate()),
-            this._padTo2Digits(date.getMonth() + 1),
-            date.getFullYear(),
-        ].join('.');
-    }
-
-    _formatHour = (data) => {
-        var minute = data.getUTCMinutes();
-        var hour = data.getUTCHours();
-        if(minute > 0)  
-            return hour+"."+minute;
-        else
-            return hour;
-    }
-
-    _getCountry = (data) => {
-        const {allpays} = this.props;
-        var filteritem = allpays.filter(function (item) {
-            if(item.id == data){
-                return item;
-            }
-        });
-        return filteritem[0].abreviation;
-    }
-
-    _getCategorie = (data) => {
-        const {allcategories} = this.props;
-        var filteritem = allcategories.filter(function (item) {
-            if(item.id == data){
-                return item;
-            }
-        });
-        return filteritem[0].title;
-    }
-
-
-
     render() {
         const {is_loading, 
             allnews, 
-            allinterviews, 
-            allprogrammes, 
-            allcategories, 
+            allinterview, 
+            allprogram, 
             details, 
             visibleDetail, 
             detailpagekey,
-            listpagekey
+            listpagekey,
+            allpodcast,
+            allreplay,
         } = this.props;
         return (
             <div className='container'>
                 <div className='row bodyitemblock'>
                     <div className='col-lg-3'>
-                        <h4 className='titlecore'>Actualités </h4>
+                        <h4 className='titlecore'>Nouveaux Replays </h4>
                         <div className='card bodyblock1'>
                             {
-                                allnews ?
-                                    allnews.map((news, i) => 
-                                        news.categorie == 2 ?
-                                            <div className='actuitem' key={i}>
-                                                {
-                                                    news.is_video == 0 ?
-                                                        <img src={BaseUrl +'/storage/'+ news.image} className='imageactu'  onClick={this._toggleDetail.bind(this, news.id, 1)} />
-                                                    :
-                                                        <video className='imageactu' controls controlsList="nodownload"  onClick={this._toggleDetail.bind(this, news.id, 1)}>
-                                                            <source src={BaseUrl +'/storage/'+ news.video} type="video/mp4"/>
-                                                        </video>
-                                                }
-                                                <div className='timeactu'>
-                                                    <p>
-                                                        <span><ReactCountryFlag countryCode={this._getCountry(news.origine)} svg /></span> 
-                                                        <span> {this._formatDate(new Date(news.created_at))}</span>
-                                                        <span><Icon.Dot/> {this._formatHour(new Date(news.created_at))}</span> 
-                                                        <span><Icon.Dot/> {this._getCategorie(news.categorie)}</span> 
-                                                    </p>
-                                                </div>
-                                                <div className='titleactu'>
-                                                    <a href='#' onClick={this._toggleDetail.bind(this, news.id, 1)}>{news.title}</a>
-                                                </div>
+                                allreplay ?
+                                    allreplay.map((item, i) => 
+                                        <div className='actuitem' key={i}>
+                                            <video className='imageactu' controls controlsList="nodownload"  onClick={this._toggleDetail.bind(this, item, 1)}>
+                                                <source src={BaseUrl +'/storage/'+ item.video} type="video/mp4"/>
+                                            </video>
+                                            <div className='timeactu'>
+                                                <p>
+                                                    <span> {Moment(item.created_at).fromNow()}</span>
+                                                    <span><Icon.Dot/> {item.program} </span> 
+                                                </p>
                                             </div>
-                                        :null
+                                            <div className='titleactu'>
+                                                <a href='#' onClick={this._toggleDetail.bind(this, item, 1)}>{item.title}</a>
+                                            </div>
+                                        </div>
                                     )   
                                 :null 
                             }
@@ -160,21 +117,17 @@ class Core extends Component {
                                     toggleHome={this._backHome} 
                                     _toggleDetail={this._toggleDetail}
                                     _ListViewDataCore={this._ListViewDataCore}
-                                    _formatDate={this._formatDate}
-                                    _formatHour={this._formatHour}
-                                    _getCountry={this._getCountry}
-                                    _getCategorie={this._getCategorie}
                                     detailpagekey={detailpagekey}
                                 />
                             </div>
                         :
                             <div className='col-lg-6'>
-                                <h4 className='titlecore'>Accueil </h4>
+                                <h4 className='titlecore'>A la Une </h4>
                                 <div className='card bodyblock2'>
                                     <div className='bannercss'>
                                         <img src={Banner1} className='imagebanner' />
                                         <div className='timeblockbanner'>
-                                            <p><span><ReactCountryFlag countryCode="CM" svg /></span> 
+                                            <p><span>Cameroun</span> 
                                             <span>01.01.2000</span> 
                                             <span>11.22</span> 
                                             <span>Sport</span> </p>
@@ -192,14 +145,13 @@ class Core extends Component {
                                         <ul>
                                             {
                                                 allnews ?
-                                                    allnews.map((news, i) => 
+                                                    allnews.map((item, i) => 
                                                         <div key={i}>
                                                             <li>
-                                                                <p><span><ReactCountryFlag countryCode={this._getCountry(news.origine)} svg /></span> 
-                                                                <span> {this._formatDate(new Date(news.created_at))}</span> 
-                                                                <span> {this._formatHour(new Date(news.created_at))}</span> 
-                                                                <span> {this._getCategorie(news.categorie)}</span> </p>
-                                                                <a href='#' onClick={this._toggleDetail.bind(this, news.id, 1)}>{news.title}</a>
+                                                                <p><span className='countrystyle'>{item.country}</span> <Icon.Dot/> 
+                                                                <span> {Moment(item.created_at).fromNow()}</span> <Icon.Dot/> 
+                                                                <span> {item.category}</span> </p>
+                                                                <a href='#' onClick={this._toggleDetail.bind(this, item, 1)}>{item.title}</a>
                                                             </li>
                                                             <hr/>
                                                         </div>
@@ -221,9 +173,9 @@ class Core extends Component {
                                         <div className='categorieinterview'>
                                             <ul>
                                                 {
-                                                    allcategories ?
-                                                        allcategories.map((categorie, i) => 
-                                                            <li key={i}><a href='#'>{categorie.title}</a></li>
+                                                    allinterview ?
+                                                        allinterview.map((item, i) => 
+                                                            <li key={i}><a href='#'>{item.category}</a></li>
                                                         )
                                                     :null
 
@@ -234,29 +186,27 @@ class Core extends Component {
                                     <div className='listinterviewcontainer'>
                                         <ul>
                                             {
-                                                allinterviews ?
-                                                    allinterviews.map((interview, i) => 
+                                                allinterview ?
+                                                    allinterview.map((item, i) => 
                                                         <li key={i}>
                                                             <div className='blockimageinterviewitem'>
                                                                 {
-                                                                    interview.is_video == 0 ?
-                                                                        <img src={BaseUrl +'/storage/'+ interview.image} className='imageinterviewitem'
-                                                                            onClick={this._toggleDetail.bind(this, interview.id, 2)} 
+                                                                    item.is_video == 0 ?
+                                                                        <img src={BaseUrl +'/storage/'+ item.cover} className='imageinterviewitem'
+                                                                            onClick={this._toggleDetail.bind(this, item, 2)} 
                                                                         />
                                                                     :
                                                                         <video className='imageinterviewitem' controls controlsList="nodownload"
-                                                                            onClick={this._toggleDetail.bind(this, interview.id, 2)}
-                                                                        >
-                                                                            <source src={BaseUrl +'/storage/'+ interview.video} type="video/mp4"/>
+                                                                            onClick={this._toggleDetail.bind(this, item, 2)}>
+                                                                            <source src={BaseUrl +'/storage/'+ item.video} type="video/mp4"/>
                                                                         </video>
                                                                 }
                                                             </div>
                                                             <div className='col-lg-6 detailinterview'>
-                                                                <p><span><ReactCountryFlag countryCode={this._getCountry(interview.origine)} svg />
-                                                                </span> <span> {this._formatDate(new Date(interview.created_at))}</span> 
-                                                                <span> {this._formatHour(new Date(interview.created_at))}</span> 
-                                                                <span> {this._getCategorie(interview.categorie)}</span> </p>
-                                                                <a href='#' onClick={this._toggleDetail.bind(this, interview.id, 2)} >{interview.title}</a>
+                                                                <p><span className='countrystyle'>{item.country}</span> <Icon.Dot/> 
+                                                                <span> {Moment(item.created_at).fromNow()}</span> <Icon.Dot/> 
+                                                                <span> {item.categorie}</span> </p>
+                                                                <a href='#' onClick={this._toggleDetail.bind(this, item, 2)} >{item.title}</a>
                                                             </div>
                                                         </li>
                                                     )
@@ -272,27 +222,24 @@ class Core extends Component {
                     }
 
                     <div className='col-lg-3'>
-                        <h4 className='titlecore'>Projets {this.state.visibleDetail} </h4>
+                        <h4 className='titlecore'>Nouveaux Podcasts {this.state.visibleDetail} </h4>
                         <div className='card bodyblock3'>
                             {
-                                allnews ?
-                                    allnews.map((news, i) => 
-                                        news.categorie == 3 ?
-                                            <div className='projectitem' key={i}>
-                                                <img src={BaseUrl +'/storage/'+ news.image} className='imageproject'/>
-                                                <div className='timeproject'>
-                                                    <p>
-                                                        <span><ReactCountryFlag countryCode={this._getCountry(news.origine)} svg /></span> 
-                                                        <span> {this._formatDate(new Date(news.created_at))}</span> 
-                                                        <span> <Icon.Dot/> {this._formatHour(new Date(news.created_at))}</span> 
-                                                        <span><Icon.Dot/> {this._getCategorie(news.categorie)}</span> 
-                                                    </p>
-                                                </div>
-                                                <div className='titleproject'>
-                                                    <a href='#' onClick={this._toggleDetail.bind(this, news.id, 1)}>{news.title}</a>
-                                                </div>
+                                allpodcast ?
+                                    allpodcast.map((item, i) => 
+                                        <div className='projectitem' key={i}>
+                                            <img src={BaseUrl +'/storage/'+ item.cover} className='imageproject'/>
+                                            <div className='timeproject'>
+                                                <p>
+                                                    <span className='countrystyle'>{item.country}</span> <Icon.Dot/> 
+                                                    <span> {Moment(item.created_at).fromNow()}</span> <Icon.Dot/> 
+                                                    <span><Icon.Dot/> {item.program}</span> 
+                                                </p>
                                             </div>
-                                        :null
+                                            <div className='titleproject'>
+                                                <a href='#' >{item.title}</a>
+                                            </div>
+                                        </div>
                                     )
                                 :null
                             }
@@ -313,12 +260,12 @@ class Core extends Component {
                     <div className='blockitemprogrammetv'>
                         <div className='row '>
                             {
-                                allprogrammes ?
-                                    allprogrammes.map((programe, i) => 
+                                allprogram ?
+                                    allprogram.map((item, i) => 
                                         <div className='col-lg-4 itemprogram' key={i}>
                                             <div className='card'>
-                                                <img src={BaseUrl +'/storage/'+ programe.image} className='imageprogrammetv'/>
-                                                <a href='#'>{programe.title}</a>
+                                                <img src={BaseUrl +'/storage/'+ item.cover} className='imageprogrammetv'/>
+                                                <a href='#'>{item.title}</a>
                                             </div>
                                         </div>
                                     )
@@ -350,7 +297,7 @@ class Core extends Component {
                                     <div className='footeritemdigitalworld'>
                                         <a href='#'>75th Anniverssaire...</a>
                                         <p>
-                                            <span><ReactCountryFlag countryCode="CM" svg /> <Icon.Dot/> Cameroun</span>
+                                            <span className='countrystyle'>CAmeroun</span> 
                                             <span><Icon.Dot/> Sport</span> 
                                         </p>
                                     </div>
@@ -391,10 +338,10 @@ const mapDispatchToProps = (dispatch) => {
         visibleList:state.navigation.visibleList,
         visibleDetail:state.navigation.visibleDetail,
         allnews: state.dataManager.homedata.allnews,
-        allinterviews: state.dataManager.homedata.allinterviews,
-        allprogrammes: state.dataManager.homedata.allprogrammes,
-        allcategories: state.dataManager.homedata.allcategories,
-        allpays: state.dataManager.homedata.allpays,
+        allinterview: state.dataManager.homedata.allinterview,
+        allprogram: state.dataManager.homedata.allprogram,
+        allpodcast:state.dataManager.homedata.allpodcast,
+        allreplay:state.dataManager.homedata.allreplay,
         details: state.dataManager.detail_view,
     }
   }

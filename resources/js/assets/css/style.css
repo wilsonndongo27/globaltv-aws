@@ -2,16 +2,15 @@
     Uniformiser la police
 */
 @font-face {
-    src: url(./futura/Futura\ Book\ font.ttf);
-    font-family: FuturaStd;
+    src: url(./fonts/AdventPro-Regular.ttf);
+    font-family: AdventPro-Regular;
 }
 @font-face {
-    src: url(./futura/Futura\ Bold\ font.ttf);
-    font-family: FuturaStd;
-    font-weight: bold;
+    src: url(./fonts/AdventPro-Bold.ttf);
+    font-family: AdventPro-Bold;
 }
 body, header {
-    font-family: FuturaStd !important;
+    font-family: AdventPro-Regular !important;
     background-color: #fff !important;
 }
 
@@ -179,21 +178,23 @@ body, header {
 .fixlive1{
     background-color: #534d99;
     height: 37px;
-    border-bottom-right-radius: 30px;
-    border-top-right-radius: 30px;
-    width: 52%;
+    width: 50%;
 }
 .fixlive2{
     height: 37px;
     background-color: #2f2574;
-    width: 48%;
+    width: 50%;
 }
 .iconhidelive{
     color: #fff;
     font-size: 20px;
+}
+.liveiconhideblock{
+    background-color: #2f2574;
+    left: 49%;
     position: absolute;
-    left: 50%;
-    margin-top: 9px;
+    padding: 7px;
+    border-radius: 20%;
 }
 
 .fixlive1 p{
@@ -265,7 +266,7 @@ body, header {
 }
 .titlecore{
     font-weight: bold;
-    color: #666;
+    color: #000;
 }
 .imagebanner{
     width: 100%;
@@ -295,6 +296,9 @@ body, header {
 .titlebanner p:hover{
     color: #5981db;
 }
+.countrystyle{
+    text-transform: capitalize;
+}
 
 
 /**List News block*/
@@ -304,7 +308,7 @@ body, header {
 .newslist ul li a{
     text-decoration: none;
     font-size: 17px;
-    color: #444;
+    color: #000;
     font-weight: bold;
     padding: 10px;
 }
@@ -318,6 +322,12 @@ body, header {
     width: 22px !important;
     height: auto !important;
     border-radius: 100%;
+}
+.newslist svg{
+    font-size: 20px;
+    margin-right: -17px;
+    margin-left: -17px;
+    color: #666;
 }
 .allactubtn{
     width: 100%;
@@ -561,7 +571,7 @@ body, header {
 /**Footer block css*/
 .mainblockfooter{
     margin: 0;
-    background-color: #534d99;
+    background-color: #2f2574;
 }
 .firstlinefooterblock{
     display: flex;
@@ -632,7 +642,7 @@ body, header {
 .titleactu a{
     font-weight: bold;
     text-decoration: none;
-    color: #666;
+    color: #000;
     font-size: 18px;
 }
 .titleactu a:hover{
@@ -644,7 +654,7 @@ body, header {
     font-weight: bold;
 }
 .timeactu svg{
-    font-size: 15px;
+    font-size: 20px;
     color: #666;
 }
 .allactulifebtn{
@@ -718,9 +728,13 @@ body, header {
 .blockdetail h4{
     margin-top: 10px;
     margin-bottom: 10px;
+    color: #000;
+    font-weight: bold;
 }
 .blockdetail svg{
     font-size: 20px;
+    margin-right: -8px;
+    margin-left: -8px;
 }
 .imageflag{
     width: 22px !important;
@@ -733,6 +747,7 @@ body, header {
 .descriptionarticle{
     margin-top: 27px;
     margin-bottom: 30px;
+    font-size: 18px;
 }
 .footerdetail{  
     display: flex;
@@ -927,6 +942,13 @@ body, header {
 .footerlist{
     margin: 10px;
     font-size: 13px;
+    color: #666;
+}
+.footerlisttime{
+    display: -webkit-box;
+}
+.footerlisttime svg{
+    font-size: 20px;
     color: #666;
 }
 .blocklangue{
