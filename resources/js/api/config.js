@@ -2,7 +2,7 @@
 export const defaulToken = document.querySelector('meta[name="csrf-token"]');
 //export const BaseUrl =  "https://glovalltv.tv";
 //export const BaseUrl =  "http://192.168.100.124:8010";
-export const BaseUrl =  "https://globaltv.tv/";
+export const BaseUrl =  "https://globaltv.africa/";
 //export const BaseUrl =  "http://127.0.0.1:8000/";
 
 
