@@ -66,6 +66,14 @@ class HomeAPI extends Controller
             ->paginate(5)
         );
 
+        $alltopnews = NewsResource::collection(
+            News::where('is_active', 1)
+            ->where('is_valid', 1)
+            ->where('priority', 3)
+            ->OrderBy('created_at', 'DESC')
+            ->paginate(5)
+        );
+
         return response([ 
             'status' => 200,
             'allbanner' => $allbanner,
@@ -74,6 +82,7 @@ class HomeAPI extends Controller
             'allpodcast' => $allpodcast,
             'allstream' => $allstream,
             'allnews' => $allnews,
+            'alltopnews' => $alltopnews,
             'allinterview' => $allinterview,
             'message' => 'Opération réussi!',
         ]);

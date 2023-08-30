@@ -275,14 +275,7 @@ $('.validationForm').on('click', function(){
 })
  
 /** gestion des tables list */
-$(document).ready(function() {
-    $('.global-data-table').DataTable({
-        language : {
-            url : 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
-        }
-    });
 
-});
 
 
 /**

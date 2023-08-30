@@ -46,17 +46,17 @@ class Details extends Component {
             <div>
                 {
                     detail_view ?
-                        <div className='blockdetail'>
+                        <div className='blockdetail' id='detailblock'>
                             <span><span className='countrystyle'>{detail_view.country}</span> <Icon.Dot/> 
                             <span> {Moment(detail_view.created_at).fromNow()}</span>  <Icon.Dot/> 
                             <span> {detail_view.category}</span> </span>
                             <h4>{detail_view.title}</h4> 
                             {
                                 detail_view.is_video == 0 ?
-                                    <img src={BaseUrl +'/storage/'+ detail_view.cover} className='imagedetail'/>
+                                    <img src={BaseUrl +'storage/'+ detail_view.cover} className='imagedetail'/>
                                 :
                                     <video className='imagedetail' controls controlsList='nodownload'>
-                                        <source src={BaseUrl +'/storage/'+ detail_view.video} type="video/mp4"/>
+                                        <source src={BaseUrl +'storage/'+ detail_view.video} type="video/mp4"/>
                                     </video>
                             }
                             <p className='descriptionarticle' aria-readonly={true}>
@@ -108,10 +108,10 @@ class Details extends Component {
                                                 <div className='connexeitem col-lg-6' key={i}> 
                                                     {
                                                         item.is_video == 0 ?
-                                                            <img src={BaseUrl +'/storage/'+ item.image} className='imageconnexe'/>
+                                                            <img src={BaseUrl +'storage/'+ item.image} className='imageconnexe'/>
                                                         :
                                                             <video className='imageconnexe' controls controlsList='nodownload'>
-                                                                <source src={BaseUrl +'/storage/'+ item.video} type="video/mp4"/>
+                                                                <source src={BaseUrl +'storage/'+ item.video} type="video/mp4"/>
                                                             </video>
                                                     }                 
                                                     <span><span className='countrystyle'>{item.country}</span> 

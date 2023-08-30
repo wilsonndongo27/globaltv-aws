@@ -10,7 +10,9 @@ import { NAVIGATE_DETAIL,
     LIST_PAGE_KEY,
     DETAIL_PAGE_KEY,
 } from './types';
-import { BaseUrl, dataAuth } from '../../api/config';
+import { BaseUrl, dataAuth, headerAuth } from '../../api/config';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 /**Manage Navigation */
 export const DetailSwicht = (data) => {
@@ -28,25 +30,22 @@ export const homeActionData = () =>
 {
     try {
         store.dispatch({type:IS_LOADING, value:true});
-        fetch(`${BaseUrl}/api/auth`, dataAuth)
-        .then((res) => res.json())
+        axios.post(`${BaseUrl}api/auth`, dataAuth)
         .then((resJson) => {
-            if(resJson.access_token){
+            if(resJson.data.access_token){
                 store.dispatch({type:INFO_AUTH, value:resJson });
                 const nextData = {
-                    method: 'GET',
                     headers: {
-                        'content-type': 'application/json',
-                        'Authorization': `Bearer ${resJson.access_token}`,
+                        'Authorization': 'Bearer ' + resJson.data.access_token,
+                        'content-type': 'multipart/form-data' 
                     }
                 }
-                fetch(`${BaseUrl}/api/home`, nextData)
-                .then((res) => res.json())
+                axios.get(`${BaseUrl}api/home`, nextData)
                 .then((resJson) => {
                     store.dispatch({type:IS_LOADING, value:false});
                     store.dispatch({
                         type:HOME_DATA,
-                        value:resJson
+                        value:resJson.data
                     })
                 })
             }
@@ -147,7 +146,8 @@ export const detailViewAction = (data) =>
                 type:DETAIL_VIEW,
                 value:data.item
             })
-            store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
+            store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});    
+            //navigate('/#detailblock');
         }
         if(data.key == 2){
             store.dispatch({type:IS_LOADING, value:false});

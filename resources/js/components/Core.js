@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState  } from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import  '../assets/css/style.css';
@@ -13,10 +13,15 @@ import ReactCountryFlag from "react-country-flag"
 import Details from '../screens/Details';
 import {BaseUrl} from '../api/config';
 import {ListSwicht, listViewAction, detailViewAction, DetailSwicht} from '../reducers/actions'
-import { useNavigate } from 'react-router-dom';
 import Moment from 'moment';
 import 'moment/locale/fr';
 import CountryData from "country-data";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+import FadeInOut from '../utils/FadeInOut';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import ProgramItem from './ProgramItem';
 
 class Core extends Component {
     constructor(props){
@@ -63,17 +68,29 @@ class Core extends Component {
         return num.toString().padStart(2, '0');
     }
 
+    _redirectBanner = (item) => {
+        console.log(item)
+    }
+
+    _nextTopNews = () => {
+        console.log('Next Element')
+    }
+
+    _previousTopNews = () => {
+        console.log('Previows element')
+    }
+
     render() {
         const {is_loading, 
             allnews, 
             allinterview, 
             allprogram, 
-            details, 
             visibleDetail, 
             detailpagekey,
-            listpagekey,
             allpodcast,
             allreplay,
+            allbanner,
+            alltopnews,
         } = this.props;
         return (
             <div className='container'>
@@ -86,7 +103,7 @@ class Core extends Component {
                                     allreplay.map((item, i) => 
                                         <div className='actuitem' key={i}>
                                             <video className='imageactu' controls controlsList="nodownload"  onClick={this._toggleDetail.bind(this, item, 1)}>
-                                                <source src={BaseUrl +'/storage/'+ item.video} type="video/mp4"/>
+                                                <source src={BaseUrl +'storage/'+ item.video} type="video/mp4"/>
                                             </video>
                                             <div className='timeactu'>
                                                 <p>
@@ -110,117 +127,160 @@ class Core extends Component {
                         </div>
                     </div>
 
-                    {
-                        visibleDetail ?
-                            <div className='col-lg-6'>
-                                <Details 
-                                    toggleHome={this._backHome} 
-                                    _toggleDetail={this._toggleDetail}
-                                    _ListViewDataCore={this._ListViewDataCore}
-                                    detailpagekey={detailpagekey}
-                                />
-                            </div>
-                        :
-                            <div className='col-lg-6'>
-                                <h4 className='titlecore'>A la Une </h4>
-                                <div className='card bodyblock2'>
-                                    <div className='bannercss'>
-                                        <img src={Banner1} className='imagebanner' />
-                                        <div className='timeblockbanner'>
-                                            <p><span>Cameroun</span> 
-                                            <span>01.01.2000</span> 
-                                            <span>11.22</span> 
-                                            <span>Sport</span> </p>
-                                            <div className='blockslidebtninfo'>
-                                                <Icon.ArrowLeftCircle className='iconchangeleftinfo'/>
-                                                <Icon.ArrowRightCircle className='iconchangerightinfo'/>
+                    <div className='col-lg-6'>
+                        <div className='bannerblock'>
+                            {
+                                allbanner ?
+                                    <Carousel autoPlay infiniteLoop>
+                                        {
+                                            allbanner.map((item, i) => 
+                                                <div key={i} onClick={this._redirectBanner.bind(this, item)}>
+                                                    <img className='bannerimage' src={BaseUrl + 'storage/' + item.cover} />
+                                                </div>
+                                            )
+                                        }
+                                    </Carousel>       
+                                :null
+                            }
+                        </div>
+                        
+                        <div>
+                            {
+                                visibleDetail ?
+                                    <Details 
+                                        toggleHome={this._backHome} 
+                                        _toggleDetail={this._toggleDetail}
+                                        _ListViewDataCore={this._ListViewDataCore}
+                                        detailpagekey={detailpagekey}
+                                    />
+                                :
+                                    <div className='blocknewshome'>
+                                        <h4 className='titlecore'>A la Une </h4>
+                                        <div className='card bodyblock2'>
+                                            <div className='bannercss'>
+                                                <Swiper
+                                                    spaceBetween={50}
+                                                    slidesPerView={1}
+                                                    onSlideChange={() => console.log('slide change')}
+                                                    onSwiper={(swiper) => console.log(swiper)}
+                                                    >
+                                                        {
+                                                            alltopnews ?
+                                                                alltopnews.map((item, i) => 
+                                                                    <FadeInOut show={true} duration={3000}>
+                                                                        <SwiperSlide key={i}>
+                                                                            <img src={ BaseUrl + 'storage/' + item.cover } className='imagebanner' />
+                                                                            <div className='timeblockbanner'>
+                                                                                <p><span className='countrystyle'>{item.country}</span> 
+                                                                                <span><Icon.Dot/> {Moment(item.created_at).fromNow()}</span> 
+                                                                                <span><Icon.Dot/> {item.category}</span> </p>
+                                                                            </div>
+                                                                            <div className='titlebanner'>
+                                                                                <p onClick={this._toggleDetail.bind(this, item, 1)}>{item.title}</p>
+                                                                            </div>
+                                                                        </SwiperSlide>
+                                                                    </FadeInOut>
+                                                                )
+                                                            
+                                                            :null
+                                                        }
+                                                </Swiper>
+                                                <div className='blockarrowtopnews'>
+                                                    <Icon.ArrowLeftCircle className='iconchangeleftinfo swiper-slide-prev' 
+                                                    onClick={this._nextTopNews}/>
+                                                    <Icon.ArrowRightCircle className='iconchangerightinfo swiper-slide-next' 
+                                                    onClick={this._previousTopNews}/>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div className='newslist'>
+                                                <ul>
+                                                    {
+                                                        allnews ?
+                                                            allnews.map((item, i) => 
+                                                                <div key={i}>
+                                                                    <li>
+                                                                        <p><span className='countrystyle'>{item.country}</span> <Icon.Dot/> 
+                                                                        <span> {Moment(item.created_at).fromNow()}</span> <Icon.Dot/> 
+                                                                        <span> {item.category}</span> </p>
+                                                                        <a href='#' onClick={this._toggleDetail.bind(this, item, 1)}>{item.title}</a>
+                                                                    </li>
+                                                                    <hr/>
+                                                                </div>
+                                                            )
+                                                        :null
+                                                    }
+                                                </ul>
+                                                <div className='blockbtnallactu'>
+                                                    <a href='#' className='btn  btn-lg allactubtn' onClick={this._ListViewDataCore.bind(this,null, 1)}>Toute l'Actualités</a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className='titlebanner'>
-                                            <p onClick={this._toggleDetail}>Nouveau stade de football à Bafoussam</p>
-                                        </div>
                                     </div>
-                                    <hr/>
-                                    <div className='newslist'>
-                                        <ul>
-                                            {
-                                                allnews ?
-                                                    allnews.map((item, i) => 
-                                                        <div key={i}>
-                                                            <li>
-                                                                <p><span className='countrystyle'>{item.country}</span> <Icon.Dot/> 
-                                                                <span> {Moment(item.created_at).fromNow()}</span> <Icon.Dot/> 
-                                                                <span> {item.category}</span> </p>
-                                                                <a href='#' onClick={this._toggleDetail.bind(this, item, 1)}>{item.title}</a>
-                                                            </li>
-                                                            <hr/>
-                                                        </div>
-                                                    )
-                                                :null
-                                            }
-                                        </ul>
-                                        <div className='blockbtnallactu'>
-                                            <a href='#' className='btn  btn-lg allactubtn' onClick={this._ListViewDataCore.bind(this,null, 1)}>Toute l'Actualités</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='bloggerblock'>
-                                    <img src={Blogger} className='imageblogger'/>
-                                </div>
-                                <div className='interviewblock'>
-                                    <div className='interviewheaderblock'>
-                                        <h4>Interviews </h4>
-                                        <div className='categorieinterview'>
-                                            <ul>
-                                                {
-                                                    allinterview ?
-                                                        allinterview.map((item, i) => 
-                                                            <li key={i}><a href='#'>{item.category}</a></li>
-                                                        )
-                                                    :null
+                                }
+                              
+                        </div>
 
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className='listinterviewcontainer'>
+                         
+                        <div className='interviewsblock'>
+                            <div className='bloggerblock'>
+                                <img src={Blogger} className='imageblogger'/>
+                            </div>
+                            <div className='interviewblock'>
+                                <div className='interviewheaderblock'>
+                                    <h4>Interviews </h4>
+                                    <div className='categorieinterview'>
                                         <ul>
                                             {
                                                 allinterview ?
                                                     allinterview.map((item, i) => 
-                                                        <li key={i}>
-                                                            <div className='blockimageinterviewitem'>
-                                                                {
-                                                                    item.is_video == 0 ?
-                                                                        <img src={BaseUrl +'/storage/'+ item.cover} className='imageinterviewitem'
-                                                                            onClick={this._toggleDetail.bind(this, item, 2)} 
-                                                                        />
-                                                                    :
-                                                                        <video className='imageinterviewitem' controls controlsList="nodownload"
-                                                                            onClick={this._toggleDetail.bind(this, item, 2)}>
-                                                                            <source src={BaseUrl +'/storage/'+ item.video} type="video/mp4"/>
-                                                                        </video>
-                                                                }
-                                                            </div>
-                                                            <div className='col-lg-6 detailinterview'>
-                                                                <p><span className='countrystyle'>{item.country}</span> <Icon.Dot/> 
-                                                                <span> {Moment(item.created_at).fromNow()}</span> <Icon.Dot/> 
-                                                                <span> {item.categorie}</span> </p>
-                                                                <a href='#' onClick={this._toggleDetail.bind(this, item, 2)} >{item.title}</a>
-                                                            </div>
-                                                        </li>
+                                                        <li key={i}><a href='#'>{item.category}</a></li>
                                                     )
                                                 :null
+
                                             }
                                         </ul>
                                     </div>
-                                    <div className='blockbtnallinterview'>
-                                        <button className='btn btn-lg allinterviewbtn'>Tous les Interviews</button>
-                                    </div>
+                                </div>
+                                <div className='listinterviewcontainer'>
+                                    <ul>
+                                        {
+                                            allinterview ?
+                                                allinterview.map((item, i) => 
+                                                    <li key={i}>
+                                                        <div className='blockimageinterviewitem'>
+                                                            {
+                                                                item.is_video == 0 ?
+                                                                    <img src={BaseUrl +'storage/'+ item.cover} className='imageinterviewitem'
+                                                                        onClick={this._toggleDetail.bind(this, item, 2)} 
+                                                                    />
+                                                                :
+                                                                    <video className='imageinterviewitem' controls controlsList="nodownload"
+                                                                        onClick={this._toggleDetail.bind(this, item, 2)}>
+                                                                        <source src={BaseUrl +'storage/'+ item.video} type="video/mp4"/>
+                                                                    </video>
+                                                            }
+                                                        </div>
+                                                        <div className='col-lg-6 detailinterview'>
+                                                            <p><span className='countrystyle'>{item.country}</span> <Icon.Dot/> 
+                                                            <span> {Moment(item.created_at).fromNow()}</span> <Icon.Dot/> 
+                                                            <span> {item.categorie}</span> </p>
+                                                            <a href='#' onClick={this._toggleDetail.bind(this, item, 2)} >{item.title}</a>
+                                                        </div>
+                                                    </li>
+                                                )
+                                            :null
+                                        }
+                                    </ul>
+                                </div>
+                                <div className='blockbtnallinterview'>
+                                    <button className='btn btn-lg allinterviewbtn'>Tous les Interviews</button>
                                 </div>
                             </div>
-                    }
+                        </div>
+                    </div>
 
+                      
                     <div className='col-lg-3'>
                         <h4 className='titlecore'>Nouveaux Podcasts {this.state.visibleDetail} </h4>
                         <div className='card bodyblock3'>
@@ -228,11 +288,10 @@ class Core extends Component {
                                 allpodcast ?
                                     allpodcast.map((item, i) => 
                                         <div className='projectitem' key={i}>
-                                            <img src={BaseUrl +'/storage/'+ item.cover} className='imageproject'/>
+                                            <img src={BaseUrl +'storage/'+ item.cover} className='imageproject'/>
                                             <div className='timeproject'>
                                                 <p>
-                                                    <span className='countrystyle'>{item.country}</span> <Icon.Dot/> 
-                                                    <span> {Moment(item.created_at).fromNow()}</span> <Icon.Dot/> 
+                                                    <span> {Moment(item.created_at).fromNow()}</span>
                                                     <span><Icon.Dot/> {item.program}</span> 
                                                 </p>
                                             </div>
@@ -250,30 +309,9 @@ class Core extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='tvprogramblock container'>
-                    <div className='hearderblockprogramtv'> 
-                        <h4>Programme TV</h4>
-                        <a href='#' className='linkallprogram'>
-                            Voir Tous <span><Icon.ArrowRightCircle className='iconviewallprogram'/></span>
-                        </a>
-                    </div>
-                    <div className='blockitemprogrammetv'>
-                        <div className='row '>
-                            {
-                                allprogram ?
-                                    allprogram.map((item, i) => 
-                                        <div className='col-lg-4 itemprogram' key={i}>
-                                            <div className='card'>
-                                                <img src={BaseUrl +'/storage/'+ item.cover} className='imageprogrammetv'/>
-                                                <a href='#'>{item.title}</a>
-                                            </div>
-                                        </div>
-                                    )
-                                :null
-                            }
-                        </div>
-                    </div>
-                </div>
+               
+                <ProgramItem />
+
                 <div className='podcastblock container'>
                     <img src={Podcast} className='imagepodcast'/>
                 </div>
@@ -342,6 +380,8 @@ const mapDispatchToProps = (dispatch) => {
         allprogram: state.dataManager.homedata.allprogram,
         allpodcast:state.dataManager.homedata.allpodcast,
         allreplay:state.dataManager.homedata.allreplay,
+        allbanner:state.dataManager.homedata.allbanner,
+        alltopnews: state.dataManager.homedata.alltopnews,
         details: state.dataManager.detail_view,
     }
   }

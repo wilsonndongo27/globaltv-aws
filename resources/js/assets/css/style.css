@@ -200,7 +200,7 @@ body, header {
 .fixlive1 p{
     position: absolute;
     left: 25%;
-    top: 107px;
+    top: 103px;
     color: #fff;
     font-weight: bold;
     font-size: 18px;
@@ -224,7 +224,7 @@ body, header {
 .fixlive2 p{
     position: absolute;
     right: 25%;
-    top: 107px;
+    top: 103px;
     color: #fff;
     font-weight: bold;
     font-size: 18px;
@@ -275,9 +275,10 @@ body, header {
 }
 .timeblockbanner{
     margin-top: 20px;
+    font-size: 16px;
 }
 .timeblockbanner p span{
-    padding: 10px;
+    padding-left: 10px;
 }
 .timeblockbanner p span img{
     width: 22px !important;
@@ -291,7 +292,7 @@ body, header {
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    color: #666;
+    color: #000;
 }
 .titlebanner p:hover{
     color: #5981db;
@@ -299,9 +300,26 @@ body, header {
 .countrystyle{
     text-transform: capitalize;
 }
+.blockarrowtopnews{
+    margin-left: 87%;
+}
+.blockarrowtopnews svg{
+    font-size: 25px;
+}
+.blockarrowtopnews svg:hover{
+    color: #2f2574;
+    cursor: pointer;
+}
+.iconchangeleftinfo{
+    margin-right: 10px;
+}
+
 
 
 /**List News block*/
+.blocknewshome{
+    margin-top: 50px;
+}
 .newslist ul li{
     list-style: none;
 }
@@ -310,13 +328,12 @@ body, header {
     font-size: 17px;
     color: #000;
     font-weight: bold;
-    padding: 10px;
 }
 .newslist ul li a:hover{
     color: #5981db;
 }
-.newslist ul li span{
-    padding: 10px;
+.newslist ul li span, p{
+    font-size: 16px;
 }
 .newslist ul li span img{
     width: 22px !important;
@@ -324,9 +341,7 @@ body, header {
     border-radius: 100%;
 }
 .newslist svg{
-    font-size: 20px;
-    margin-right: -17px;
-    margin-left: -17px;
+    font-size: 15px;
     color: #666;
 }
 .allactubtn{
@@ -356,6 +371,19 @@ body, header {
     max-height: 190px;
 }
 
+/**Block Banner */
+.carousel .thumbs{
+    display: none !important;
+}
+.bannerimage{
+    border-radius: 10px;
+    cursor: pointer;
+    max-height: 350px;
+    min-height: 350px;
+}
+.bannerblock{
+    height: 350px;
+}
 
 /**Blogger Banner*/
 .bloggerblock{
@@ -480,9 +508,8 @@ body, header {
 .imageprogrammetv{
     width: 100%;
     cursor: pointer;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
     max-height: 200px;
+    border-radius: 10px;
 }
 .itemprogram{
     margin-bottom: 10px;
@@ -496,6 +523,9 @@ body, header {
 }
 .itemprogram a:hover{
     color: #5981db;
+}
+.timeblockprogram{
+    margin-top: 10px;
 }
 
 /*Block Podcast**/
@@ -635,8 +665,7 @@ body, header {
 }
 .titleactu{
     padding-left: 16px;
-    margin-top: -30px;
-    padding: 16px
+    margin-top: -20px;
 }
 .titleactu a{
     font-weight: bold;
@@ -652,8 +681,8 @@ body, header {
     margin-top: -30px;
     font-weight: bold;
 }
-.timeactu svg{
-    font-size: 20px;
+.timeactu{
+    font-size: 16px;
     color: #666;
 }
 .allactulifebtn{
@@ -693,8 +722,7 @@ body, header {
 }
 .titleproject{
     padding-left: 16px;
-    margin-top: -30px;
-    padding: 16px
+    margin-top: -25px;
 }
 .titleproject a{
     font-weight: bold;
@@ -705,8 +733,8 @@ body, header {
 .titleproject a:hover{
     color: #5981db;
 }
-.timeproject svg{
-    font-size: 27px;
+.timeproject{
+    font-size: 16px;
     color: #666;
 }
 .allprojectbtn{
@@ -723,6 +751,9 @@ body, header {
 /*********Detail page block*******/
 .imagedetail{
     width: 100%;
+}
+.blockdetail{
+    margin-top: 20px;
 }
 .blockdetail h4{
     margin-top: 10px;
@@ -811,6 +842,10 @@ body, header {
     margin-left: 20px;
     margin-right: 20px;
     color: #c9c9c9;
+}
+.ql-editor img{
+    width: 100% !important;
+    height: auto !important;
 }
 
 
@@ -972,6 +1007,11 @@ body, header {
 }
 .monnaistitle svg{
     color: #666;
+}
+
+/*Caroussel Style*/
+.itemcsscaroussel{
+    margin: 20px;
 }
 
 
