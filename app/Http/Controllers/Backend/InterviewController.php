@@ -69,7 +69,7 @@ class InterviewController extends Controller
                     'is_video' => $item->is_video,
                     'is_active' => $item->is_active,
                     'is_valid' => $item->is_valid,
-                    'priority' => $item->is_valid
+                    'priority' => $item->priority
                 ];
                 $format_data = json_decode(json_encode($data), FALSE);
                 array_push($allinterview, $format_data);

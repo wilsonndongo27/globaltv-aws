@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\{Program, User};
+use App\Models\{Program, User, Replay, Like, Comment};
 
 class ReplayResource extends JsonResource
 {
@@ -17,6 +17,11 @@ class ReplayResource extends JsonResource
     {  
         $author = User::where('id', $this->author)->first();
         $currentprogram = Program::where('id', $this->program)->first();
+        $comments = Comment::where('replay', $this->id)->get();
+        $connexes = Replay::where('program', $this->program)->get();
+        $count_like = Like::where('replay', $this->id)
+            ->where('is_like', 1)
+            ->count();
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -28,7 +33,10 @@ class ReplayResource extends JsonResource
             'cover' => $this->cover,
             'video' => $this->video,
             'is_active' => $this->is_active,
-            'is_valid' => $this->is_valid
+            'is_valid' => $this->is_valid,
+            'comments' => $comments,
+            'connexes' => $connexes,
+            'count_like' => $count_like,
         ];
     }
 }

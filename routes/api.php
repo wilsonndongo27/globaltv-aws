@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ReplayAPI;
 use App\Http\Controllers\Api\PodcastAPI;
 use App\Http\Controllers\Api\StreamAPI;
 use App\Http\Controllers\Api\HomeAPI;
+use App\Http\Controllers\Api\InterviewAPI;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,15 +40,24 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     /**News */
     Route::get('news', [NewsAPI::class, 'index']);
+    Route::get('one-news/{id}/', [NewsAPI::class, 'one_news']);
     Route::get('news-category/{category}/', [NewsAPI::class, 'news_category']);
     Route::get('news-country/{country}/', [NewsAPI::class, 'news_country']);
     Route::get('news-priority/{priority}/', [NewsAPI::class, 'news_priority']);
 
+    /**Interview */
+    Route::get('interview', [InterviewAPI::class, 'index']);
+    Route::get('one-interview/{id}/', [InterviewAPI::class, 'one_interview']);
+    Route::get('interview-category/{category}/', [InterviewAPI::class, 'interview_category']);
+    Route::get('interview-country/{country}/', [InterviewAPI::class, 'interview_country']);
+
     /**Program */
     Route::get('program', [ProgramAPI::class, 'index']);
+    Route::get('one-program/{id}/', [ProgramAPI::class, 'one_program']);
 
     /**Replay */
     Route::get('replay', [ReplayAPI::class, 'index']);
+    Route::get('one-replay/{id}/', [ReplayAPI::class, 'one_replay']);
     Route::get('replay-program/{program}/', [ReplayAPI::class, 'replay_program']);
 
     /**Podcast */

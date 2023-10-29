@@ -240,7 +240,7 @@
                     </div>
                     <div class="modal-footer">
                         <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-bg-secondary">Annuler</button>
-                        <button type="submit" class="btn btn-primary newBtn buttomcreate">Sauvegarder</button>
+                        <button type="submit" class="btn btn-primary newBtn buttoncreate">Sauvegarder</button>
                     </div>
                 </form>
 

@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\{User, Country, Category, Program};
+use App\Models\{User, Country, Category, Program, Interview, Comment, Like};
 
 class InterviewResource extends JsonResource
 {
@@ -19,6 +19,11 @@ class InterviewResource extends JsonResource
         $category = Category::where('id', $this->category)->first();
         $country = Country::where('id', $this->country)->first();
         $program = Program::where('id', $this->program)->first();
+        $comments = Comment::where('interview', $this->id)->get();
+        $connexes = Interview::where('category', $this->category)->get();
+        $count_like = Like::where('interview', $this->id)
+            ->where('is_like', 1)
+            ->count();
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -28,7 +33,7 @@ class InterviewResource extends JsonResource
             'categoryid' => $category->id,
             'country' => $country->name,
             'countryid' => $country->id,
-            'program' => $program->title,
+            'program' => $program,
             'programid' => $program->id,
             'author' => $author->name,
             'created_at' => $this->created_at,
@@ -38,6 +43,9 @@ class InterviewResource extends JsonResource
             'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'comments' => $comments,
+            'connexes' => $connexes,
+            'count_like' => $count_like,
         ];
     }
 }

@@ -24,9 +24,17 @@ use App\Http\Controllers\Backend\InterviewController;
 | contains the 'web' middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
+Route::get('/',function(){
      return view('frontend.front');
-})->where('path', '.*');
+});
+
+Route::get('/list/',function(){
+     return view('frontend.front');
+});
+
+Route::get('/detail/{id}/',function(){
+     return view('frontend.front');
+});
 
 
 /**AUTH MANGEMENT */
@@ -40,7 +48,7 @@ Route::get('/analytics', [DashboardController::class, 'index'])->name('analytics
 /**Manage User Route */
 Route::get('/analytics-users', [UserController::class, 'index'])->name('users');
 Route::post('/create-user', [UserController::class, 'create'])->name('create-user');
-Route::post('/update-user', [UserController::class, 'update'])->name('update-user');
+Route::post('/update-user', [UserController::class, 'update'])->name('update-user'); 
 Route::post('/status-user', [UserController::class, 'update_status'])->name('status-user');
 Route::post('/password-user', [UserController::class, 'update_password'])->name('password-user');
 Route::post('/delete-user', [UserController::class, 'delete'])->name('delete-user');

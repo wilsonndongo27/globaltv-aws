@@ -9,10 +9,11 @@ import { NAVIGATE_DETAIL,
     DETAIL_VIEW,
     LIST_PAGE_KEY,
     DETAIL_PAGE_KEY,
+    FLASH_INFO,
+    LIVE_PLAYING
 } from './types';
 import { BaseUrl, dataAuth, headerAuth } from '../../api/config';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 /**Manage Navigation */
 export const DetailSwicht = (data) => {
@@ -23,6 +24,9 @@ export const ListSwicht = (data) => {
 }
 export const LiveSwicht = (data) => {
     store.dispatch({ type : NAVIGATE_LIVE, value:data });
+}
+export const LivePlayingSwicht = (data) => {
+    store.dispatch({ type : LIVE_PLAYING, value:data });
 }
 
 /**Actions de la data page d'accueil */
@@ -43,6 +47,14 @@ export const homeActionData = () =>
                 axios.get(`${BaseUrl}api/home`, nextData)
                 .then((resJson) => {
                     store.dispatch({type:IS_LOADING, value:false});
+                    var flash_info = [];
+                    resJson.data.allnews.map((item) => {
+                        flash_info.push(item.title);
+                    })
+                    store.dispatch({
+                        type:FLASH_INFO,
+                        value:flash_info
+                    })
                     store.dispatch({
                         type:HOME_DATA,
                         value:resJson.data
@@ -62,65 +74,83 @@ export const listViewAction = (data) =>
 {
     try {
         store.dispatch({type:IS_LOADING, value:true});
-        fetch(`${BaseUrl}/api/auth`, dataAuth)
-        .then((res) => res.json())
+        axios.post(`${BaseUrl}api/auth`, dataAuth)
         .then((resJson) => {
-            if(resJson.access_token){
+            if(resJson.data.access_token){
                 store.dispatch({type:INFO_AUTH, value:resJson });
                 const nextData = {
-                    method: 'GET',
                     headers: {
-                        'content-type': 'application/json',
-                        'Authorization': `Bearer ${resJson.access_token}`,
+                        'Authorization': 'Bearer ' + resJson.data.access_token,
+                        'content-type': 'multipart/form-data' 
                     }
                 }
                 if(data.key == 1){
-                    fetch(`${BaseUrl}/api/news`, nextData)
-                    .then((res) => res.json())
+                    axios.get(`${BaseUrl}api/news`, nextData)
                     .then((resJson) => {
                         store.dispatch({type:IS_LOADING, value:false});
                         store.dispatch({
                             type:LIST_DATA_VIEW,
-                            value:resJson.allnews
+                            value:resJson.data.allnews
                         })
                     })
                     store.dispatch({type:LIST_PAGE_KEY, value:data.key});
                 }
 
                 if(data.key == 2){
-                    fetch(`${BaseUrl}/api/interviews`, nextData)
-                    .then((res) => res.json())
+                    axios.get(`${BaseUrl}api/interview`, nextData)
                     .then((resJson) => {
                         store.dispatch({type:IS_LOADING, value:false});
                         store.dispatch({
                             type:LIST_DATA_VIEW,
-                            value:resJson.allinterviews
+                            value:resJson.data.allinterview
                         })
                         store.dispatch({type:LIST_PAGE_KEY, value:data.key});
                     })
                 }
                 
                 if(data.key == 3){
-                    fetch(`${BaseUrl}/api/replay`, nextData)
-                    .then((res) => res.json())
+                    axios.get(`${BaseUrl}api/replay`, nextData)
                     .then((resJson) => {
                         store.dispatch({type:IS_LOADING, value:false});
                         store.dispatch({
                             type:LIST_DATA_VIEW,
-                            value:resJson.allreplay
+                            value:resJson.data.allreplay
                         })
                         store.dispatch({type:LIST_PAGE_KEY, value:data.key});
                     })
                 }
 
                 if(data.key == 4){
-                    fetch(`${BaseUrl}/api/replay-program/${data.item}`, nextData)
-                    .then((res) => res.json())
+                    axios.get(`${BaseUrl}api/replay-program/${data.item}`, nextData)
                     .then((resJson) => {
                         store.dispatch({type:IS_LOADING, value:false});
                         store.dispatch({
                             type:LIST_DATA_VIEW,
-                            value:resJson.replayprogramme
+                            value:resJson.data.replayprogramme
+                        })
+                        store.dispatch({type:LIST_PAGE_KEY, value:data.key});
+                    })
+                }
+
+                if(data.key == 5){
+                    axios.get(`${BaseUrl}api/podcast`, nextData)
+                    .then((resJson) => {
+                        store.dispatch({type:IS_LOADING, value:false});
+                        store.dispatch({
+                            type:LIST_DATA_VIEW,
+                            value:resJson.data.allpodcast
+                        })
+                        store.dispatch({type:LIST_PAGE_KEY, value:data.key});
+                    })
+                }
+
+                if(data.key == 6){
+                    axios.get(`${BaseUrl}api/program`, nextData)
+                    .then((resJson) => {
+                        store.dispatch({type:IS_LOADING, value:false});
+                        store.dispatch({
+                            type:LIST_DATA_VIEW,
+                            value:resJson.data.allprogram
                         })
                         store.dispatch({type:LIST_PAGE_KEY, value:data.key});
                     })
@@ -135,8 +165,8 @@ export const listViewAction = (data) =>
     }
 }
 
-/**Actions pour Visualiser les details  */
-export const detailViewAction = (data) =>
+/**Actions pour Visualiser les details à l'accueil */
+export const detailHomeViewAction = (data) =>
 {
     try {
         store.dispatch({type:IS_LOADING, value:true});
@@ -166,6 +196,78 @@ export const detailViewAction = (data) =>
             })
             store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
         }
+        
+    } catch (err) {
+        store.dispatch({type:IS_LOADING, value:true});
+        console.log('une erreur est survenue', err)
+    }
+}
+
+/**Actions pour Visualiser les details dans les listes  */
+export const detailViewAction = (data) =>
+{
+    try {
+        store.dispatch({type:IS_LOADING, value:true});
+        axios.post(`${BaseUrl}api/auth`, dataAuth)
+        .then((resJson) => {
+            if(resJson.data.access_token){
+                store.dispatch({type:INFO_AUTH, value:resJson });
+                const nextData = {
+                    headers: {
+                        'Authorization': 'Bearer ' + resJson.data.access_token,
+                        'content-type': 'multipart/form-data' 
+                    }
+                }
+                if(data.key == 1){
+                    axios.get(`${BaseUrl}api/one-news/${data.id}`, nextData)
+                    .then((resJson) => {
+                        store.dispatch({type:IS_LOADING, value:false});
+                        store.dispatch({
+                            type:DETAIL_VIEW,
+                            value:resJson.data.news_info
+                        })
+                    })
+                    store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
+                }
+
+                if(data.key == 2){
+                    axios.get(`${BaseUrl}api/one-interview/${data.id}`, nextData)
+                    .then((resJson) => {
+                        store.dispatch({type:IS_LOADING, value:false});
+                        store.dispatch({
+                            type:DETAIL_VIEW,
+                            value:resJson.data.interview_info
+                        })
+                    })
+                    store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
+                }
+
+                if(data.key == 3){
+                    axios.get(`${BaseUrl}api/one-replay/${data.id}`, nextData)
+                    .then((resJson) => {
+                        store.dispatch({type:IS_LOADING, value:false});
+                        store.dispatch({
+                            type:DETAIL_VIEW,
+                            value:resJson.data.replay_info
+                        })
+                    })
+                    store.dispatch({type:DETAIL_PAGE_KEY, value:data.key});
+                }
+
+                if(data.key == 6){
+                    axios.get(`${BaseUrl}api/one-program/${data.id}`, nextData)
+                    .then((resJson) => {
+                        store.dispatch({type:IS_LOADING, value:false});
+                        store.dispatch({
+                            type:DETAIL_VIEW,
+                            value:resJson.data.program_info
+                        })
+                        store.dispatch({type:LIST_PAGE_KEY, value:data.key});
+                    })
+                }
+               
+            }
+        })
         
     } catch (err) {
         store.dispatch({type:IS_LOADING, value:true});

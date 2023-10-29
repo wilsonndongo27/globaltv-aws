@@ -6,8 +6,9 @@ import NavBarBlock from '../components/NavBar';
 import LiveTV from '../components/LiveTv';
 import Core from '../components/Core';
 import Footer from '../components/Footer';
-import Lists from './Lists';
+import Lists from '../components/Lists';
 import {homeActionData} from '../reducers/actions';
+import { Ring } from "react-awesome-spinners";
 
 class Home extends Component {
     constructor(props){
@@ -25,19 +26,20 @@ class Home extends Component {
     }
 
     render () {
-        const {visibleList} = this.props;
+        const {is_loading} = this.props;
         return (
             <div className='body'>
                 <div className='fixedblock'>   
                     <NavBarBlock />
                     <LiveTV  />
                 </div>
-                    {
-                        visibleList ?
-                            <Lists  />
-                        :
-                            <Core />
-                    }
+                
+                {
+                    is_loading ?
+                        <Ring className='styleloader'/>
+                    :null
+                }
+                <Core />
                 <Footer/>
             </div>
         );

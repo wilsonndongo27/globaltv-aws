@@ -1,4 +1,4 @@
-import { NAVIGATE_DETAIL, NAVIGATE_LIST, NAVIGATE_LIVE, DETAIL_PAGE_KEY, LIST_PAGE_KEY } from "./actions/types"
+import { NAVIGATE_DETAIL, NAVIGATE_LIST, NAVIGATE_LIVE, DETAIL_PAGE_KEY, LIST_PAGE_KEY, LIVE_PLAYING } from "./actions/types"
 
 const initialState = {
     visibleDetail:false,
@@ -6,6 +6,7 @@ const initialState = {
     visibleLive:false,
     listpagekey:'',
     detailpagekey:'',
+    livePlaying:false,
 
   }
 
@@ -36,7 +37,11 @@ const navigationReducer = (state = initialState, action) => {
           ...state,
           listpagekey: action.value
         }
-  
+      case LIVE_PLAYING:
+        return {
+          ...state,
+          livePlaying: action.value
+        }
 
       default:
         return state

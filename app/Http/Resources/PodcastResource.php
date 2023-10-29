@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\{Program, User};
+use App\Models\{Program, Podcast, User, Comment, like};
 
 class PodcastResource extends JsonResource
 {
@@ -17,6 +17,11 @@ class PodcastResource extends JsonResource
     {
         $author = User::where('id', $this->author)->first();
         $currentprogram = Program::where('id', $this->program)->first();
+        $comments = Comment::where('podcast', $this->id)->get();
+        $connexes = Podcast::where('program', $this->program)->get();
+        $count_like = Like::where('podcast', $this->id)
+            ->where('is_like', 1)
+            ->count();
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -30,7 +35,10 @@ class PodcastResource extends JsonResource
             'audio' => $this->audio,
             'is_active' => $this->is_active,
             'is_valid' => $this->is_valid,
-            'is_sponsoring' => $this->is_sponsoring
+            'is_sponsoring' => $this->is_sponsoring,
+            'comments' => $comments,
+            'connexes' => $connexes,
+            'count_like' => $count_like,
         ];
     }
 }

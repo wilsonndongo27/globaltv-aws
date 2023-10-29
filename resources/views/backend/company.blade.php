@@ -95,7 +95,7 @@
                     <h4 class="col-lg-7 modal-title">Ajouter les informations de entreprise</h4>
                     <button type="button" class="col-lg-2 close" data-dismiss="modal">&times;</button>
                 </div>
-                <form class="" lpformnum="1"  method="post" enctype="multipart/form-data" onsubmit="postSubmission()" action="{{ route('create-company')}}">
+                <form class="createform" lpformnum="1"  method="post" enctype="multipart/form-data" onsubmit="postSubmission()" action="{{ route('create-company')}}">
                     <div class="modal-body">
                         @csrf
                         <div class="row">
@@ -158,7 +158,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="reset" data-dismiss="modal" aria-label="Close" aria-hidden="true" class="btn btn-bg-secondary">Annuler</button>
-                        <button type="submit" class="btn btn-primary newBtn buttomcreate">Sauvegarder</button>
+                        <button type="submit" class="btn btn-primary newBtn buttoncreate">Sauvegarder</button>
                     </div>
                 </form>
 

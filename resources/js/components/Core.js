@@ -2,26 +2,23 @@ import React, { Component, useState  } from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import  '../assets/css/style.css';
-import Banner1 from '../assets/img/banner1.jpg';
 import Blogger from '../assets/img/blogger.jpg';
 import Podcast from '../assets/img/podcast.jpg';
-import ActuImage from '../assets/img/actu.jpg';
-import Worlddigital from '../assets/img/wolddigital.jpg';
-import PubImage from '../assets/img/pub.jpg';
 import * as Icon from 'react-bootstrap-icons';
-import ReactCountryFlag from "react-country-flag"
-import Details from '../screens/Details';
+import DetailHome from './DetailHome';
 import {BaseUrl} from '../api/config';
-import {ListSwicht, listViewAction, detailViewAction, DetailSwicht} from '../reducers/actions'
+import {ListSwicht, listViewAction, detailHomeViewAction, DetailSwicht} from '../reducers/actions'
 import Moment from 'moment';
 import 'moment/locale/fr';
-import CountryData from "country-data";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import FadeInOut from '../utils/FadeInOut';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import ProgramItem from './ProgramItem';
+import LeftBarReplay from './LeftBarReplay';
+import  secureLocalStorage  from  "react-secure-storage";
+import RightBarPodcast from './RightBarPodcast';
 
 class Core extends Component {
     constructor(props){
@@ -31,15 +28,12 @@ class Core extends Component {
         }
     }
 
-    componentDidMount(){
-        
-    }
-
     _backHome = () => {
         const {visibleDetail} = this.props;
         if(visibleDetail == true){
             DetailSwicht(!visibleDetail);
         }
+        window.scrollTo(0, 0);
     }
 
     _toggleDetail = (item, key) => {
@@ -51,17 +45,23 @@ class Core extends Component {
             'item':item,
             'key':key
         };
-        detailViewAction(data);
+        detailHomeViewAction(data);
     }
 
-    _ListViewDataCore = (item, key) => {
-        const {visibleList} = this.props;
-        ListSwicht(!visibleList);
+    _redirectList = async (key) => {
         const data = {
-            'item':item,
             'key':key
         };
-        listViewAction(data);
+        await secureLocalStorage.setItem('listkey', JSON.stringify(data));
+        window.location.assign('/list');
+    }
+
+    _redirectInterviewList = async (key) => {
+        const data = {
+            'key':2
+        };
+        await secureLocalStorage.setItem('listkey', JSON.stringify(data));
+        window.location.assign('/list');
     }
 
     _padTo2Digits = (num) => {
@@ -84,7 +84,6 @@ class Core extends Component {
         const {is_loading, 
             allnews, 
             allinterview, 
-            allprogram, 
             visibleDetail, 
             detailpagekey,
             allpodcast,
@@ -95,63 +94,43 @@ class Core extends Component {
         return (
             <div className='container'>
                 <div className='row bodyitemblock'>
+                    {/* Block Replay */}
                     <div className='col-lg-3'>
-                        <h4 className='titlecore'>Nouveaux Replays </h4>
-                        <div className='card bodyblock1'>
-                            {
-                                allreplay ?
-                                    allreplay.map((item, i) => 
-                                        <div className='actuitem' key={i}>
-                                            <video className='imageactu' controls controlsList="nodownload"  onClick={this._toggleDetail.bind(this, item, 1)}>
-                                                <source src={BaseUrl +'storage/'+ item.video} type="video/mp4"/>
-                                            </video>
-                                            <div className='timeactu'>
-                                                <p>
-                                                    <span> {Moment(item.created_at).fromNow()}</span>
-                                                    <span><Icon.Dot/> {item.program} </span> 
-                                                </p>
-                                            </div>
-                                            <div className='titleactu'>
-                                                <a href='#' onClick={this._toggleDetail.bind(this, item, 1)}>{item.title}</a>
-                                            </div>
-                                        </div>
-                                    )   
-                                :null 
-                            }
-                            <div className='blockbtnallactulife'>
-                                <a href='#' className='btn  btn-lg allactulifebtn' onClick={this._ListViewDataCore.bind(this, null, 1)}>Voir plus</a>
-                            </div>
-                        </div>
-                        <div className='card blockpub'>
-                            <img src={PubImage} className='imagepub'/>
-                        </div>
+                        <LeftBarReplay 
+                            allreplay={allreplay} 
+                        />
                     </div>
 
+                    {/* Bock Pub et To News */}
                     <div className='col-lg-6'>
-                        <div className='bannerblock'>
-                            {
-                                allbanner ?
-                                    <Carousel autoPlay infiniteLoop>
-                                        {
-                                            allbanner.map((item, i) => 
-                                                <div key={i} onClick={this._redirectBanner.bind(this, item)}>
-                                                    <img className='bannerimage' src={BaseUrl + 'storage/' + item.cover} />
-                                                </div>
-                                            )
-                                        }
-                                    </Carousel>       
-                                :null
-                            }
-                        </div>
-                        
+                        {
+                            !visibleDetail ?
+                                <div className='bannerblock'>
+                                    {
+                                        allbanner ?
+                                            <Carousel autoPlay infiniteLoop>
+                                                {
+                                                    allbanner.map((item, i) => 
+                                                        <div key={i} onClick={this._redirectBanner.bind(this, item)}>
+                                                            <img className='bannerimage' src={BaseUrl + 'storage/' + item.cover} />
+                                                        </div>
+                                                    )
+                                                }
+                                            </Carousel>       
+                                        :null
+                                    }
+                                </div>
+                            :null
+                        }
+                     
                         <div>
                             {
                                 visibleDetail ?
-                                    <Details 
+                                    <DetailHome 
                                         toggleHome={this._backHome} 
                                         _toggleDetail={this._toggleDetail}
-                                        _ListViewDataCore={this._ListViewDataCore}
                                         detailpagekey={detailpagekey}
+                                        _redirectList={this._redirectList}
                                     />
                                 :
                                     <div className='blocknewshome'>
@@ -167,8 +146,8 @@ class Core extends Component {
                                                         {
                                                             alltopnews ?
                                                                 alltopnews.map((item, i) => 
-                                                                    <FadeInOut show={true} duration={3000}>
-                                                                        <SwiperSlide key={i}>
+                                                                    <FadeInOut show={true} duration={3000} key={i}>
+                                                                        <SwiperSlide>
                                                                             <img src={ BaseUrl + 'storage/' + item.cover } className='imagebanner' />
                                                                             <div className='timeblockbanner'>
                                                                                 <p><span className='countrystyle'>{item.country}</span> 
@@ -212,7 +191,7 @@ class Core extends Component {
                                                     }
                                                 </ul>
                                                 <div className='blockbtnallactu'>
-                                                    <a href='#' className='btn  btn-lg allactubtn' onClick={this._ListViewDataCore.bind(this,null, 1)}>Toute l'Actualités</a>
+                                                    <a href='#' className='btn  btn-lg allactubtn' onClick={this._redirectList.bind(this, 1)}>Toute l'Actualités</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -220,8 +199,7 @@ class Core extends Component {
                                 }
                               
                         </div>
-
-                         
+ 
                         <div className='interviewsblock'>
                             <div className='bloggerblock'>
                                 <img src={Blogger} className='imageblogger'/>
@@ -274,39 +252,17 @@ class Core extends Component {
                                     </ul>
                                 </div>
                                 <div className='blockbtnallinterview'>
-                                    <button className='btn btn-lg allinterviewbtn'>Tous les Interviews</button>
+                                    <button className='btn btn-lg allinterviewbtn' onClick={this._redirectInterviewList}>Tous les Interviews</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                      
+                    
+                    {/* Block PodCasts */}
                     <div className='col-lg-3'>
-                        <h4 className='titlecore'>Nouveaux Podcasts {this.state.visibleDetail} </h4>
-                        <div className='card bodyblock3'>
-                            {
-                                allpodcast ?
-                                    allpodcast.map((item, i) => 
-                                        <div className='projectitem' key={i}>
-                                            <img src={BaseUrl +'storage/'+ item.cover} className='imageproject'/>
-                                            <div className='timeproject'>
-                                                <p>
-                                                    <span> {Moment(item.created_at).fromNow()}</span>
-                                                    <span><Icon.Dot/> {item.program}</span> 
-                                                </p>
-                                            </div>
-                                            <div className='titleproject'>
-                                                <a href='#' >{item.title}</a>
-                                            </div>
-                                        </div>
-                                    )
-                                :null
-                            }
-
-                            <div className='blockbtnallproject'>
-                                <a href='#' className='btn  btn-lg allprojectbtn' onClick={this._ListViewDataCore.bind(this, null, 1)}>Voir plus</a>
-                            </div>
-                        </div>
+                        <RightBarPodcast
+                            allpodcast={allpodcast}
+                        />
                     </div>
                 </div>
                
@@ -364,7 +320,7 @@ class Core extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-       ...bindActionCreators({listViewAction, ListSwicht, detailViewAction, DetailSwicht}, dispatch),
+       ...bindActionCreators({listViewAction, ListSwicht, detailHomeViewAction, DetailSwicht}, dispatch),
      }
  };
 

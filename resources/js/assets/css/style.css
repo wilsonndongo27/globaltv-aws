@@ -57,12 +57,12 @@ body, header {
     margin-top: 5px;
 }
 .defiler{
-    margin-top: -20px;  
+    margin-top: -25px;  
     margin-left: 5%;   
     display: flex;        
 }
 .defiler marquee{
-    font-size: 12px;        
+    font-size: 15px;        
 }
 .defiler marquee span{
     margin-left: 10px;       
@@ -70,16 +70,31 @@ body, header {
 .separationhead{
     border-left: #eee solid 2px;
 }
-.blocktemperature{
-    margin-left: 40px;
+.blocktopnews{
+    margin-left: 6px;
     display: flex;
     margin-top: -7px;
+    height: 32px;
+    width: 45%;
 }
-.blocktemperature span{
-    margin-left: 16px;
-    font-size: 13px;
+.topnewscontent{
+    width: 90%;
+    font-size: 16px;
+    padding: 5px;
+}
+.blocktopnews .topinfotitle{
+    margin-top: 4px;
+    width: 14%;
+}
+.topinfotitle{
+    font-weight: bold;
+    font-size: 17px !important;
 }
 .monnaistitle{
+    font-weight: bold;
+    font-size: 17px !important;
+}
+.languagetitle{
     font-weight: bold;
     font-size: 17px !important;
 }
@@ -138,6 +153,16 @@ body, header {
     height:100px;
     transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
 }
+.iconcurrency{
+    font-size: 13px;
+    margin-top: -4px;
+}
+.icondown{
+    color: red;
+}
+.iconup{
+    color: green;
+}
 
 
 /* Block live **/
@@ -165,9 +190,9 @@ body, header {
     margin-top: 50px !important;
 }
 .livereader{
-    height: 192px;
+    height: 192px !important;
     background-color: black;
-    width: 38%;
+    width: 38% !important   ;
     margin-left: 92px;
 }
 .infosinstant{
@@ -447,7 +472,7 @@ body, header {
     padding: 10px;
 }
 .imageinterviewitem{
-    width: 100%;
+    width: 100% !important;
     border: #eee solid 1px;
     border-radius: 5px;
     padding: 10px;
@@ -847,6 +872,9 @@ body, header {
     width: 100% !important;
     height: auto !important;
 }
+.btnbackhome{
+    cursor: pointer;
+}
 
 
 /**Block Connexe****/
@@ -958,7 +986,6 @@ body, header {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;   
     cursor: pointer;
-    max-height: 110px;
 }
 .listtitle{
     padding-top: 15px;
@@ -1008,11 +1035,68 @@ body, header {
 .monnaistitle svg{
     color: #666;
 }
+.languagetitle svg{
+    color: #666;
+    font-size: 15px;
+    margin-top: -4px;
+}
 
 /*Caroussel Style*/
 .itemcsscaroussel{
     margin: 20px;
 }
+
+/* Css Loader */
+.styleloader{
+    font-size: 50px;
+    color: #2f2574 !important;
+}
+.bWBnTL{
+    position: absolute !important;
+    width: 117px;
+    height: 107px;
+    left: 48% !important;
+    top: 50% !important;
+    z-index: 998;
+}
+.gHDfkL{
+    border: 6px solid #2f2574 !important;
+    border-radius: 50%;
+    animation: gPkZWB 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #2f2574 transparent transparent transparent !important;
+}
+
+/* Fade Css**/
+.blockfade{
+    z-index: 9999;
+}
+
+/* CSS SWIPER */
+.swiper{
+    width: 100% !important;
+}
+
+/** CSS Render HTML */
+.ql-hidden{
+    display: none !important;
+}
+
+/**SIDE BAR CSS */
+.emptysidebar{
+    padding: 55px;
+}
+.emptysidebar p{
+    text-align: center;
+    color: #666;
+    font-size: 15px;
+}
+
+/**AUdio Player*/
+.audioplayer{
+    width: 100%;
+}
+
+
 
 
 

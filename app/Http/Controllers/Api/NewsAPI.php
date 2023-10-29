@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\{BannerResource, NewsResource};
-use App\Models\{News, Category, Country, User};
+use App\Models\{News, Category, Country, User, Comment, Like};
 
 class NewsAPI extends Controller
 {
@@ -38,6 +38,52 @@ class NewsAPI extends Controller
             'isfirstpage' => $isfirstpage,
             'hasmorepage' => $hasmorepage,
             'allnews' => $allnews,
+            'message' => 'Opération réussi!',
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function one_news($id)
+    {
+        $news = News::where('id', $id)->first();
+        $author = User::where('id', $news->author)->first();
+        $category = Category::where('id', $news->category)->first();
+        $country = Country::where('id', $news->country)->first();
+        $comments = Comment::where('news', $news->id)->get();
+        $connexes = News::where('category', $news->category)->get();
+        $count_like = Like::where('news', $news->id)
+            ->where('is_like', 1)
+            ->count();
+        $data = [
+            'id' => $news->id,
+            'title' => $news->title,
+            'label' => $news->label,
+            'description' => $news->description,
+            'category' => $category->title,
+            'categoryid' => $category->id,
+            'country' => $country->name,
+            'countryid' => $country->id,
+            'author' => $author->name,
+            'priority' => $news->priority,
+            'created_at' => $news->created_at,
+            'cover' => $news->cover,
+            'video' => $news->video,
+            'is_video' => $news->is_video,
+            'is_active' => $news->is_active,
+            'is_valid' => $news->is_valid,
+            'comments' => $comments,
+            'connexes' => $connexes,
+            'count_like' => $count_like,
+        ];
+        $format_data = json_decode(json_encode($data), FALSE);
+
+        return response([ 
+            'status' => 200,
+            'news_info' => $format_data,
             'message' => 'Opération réussi!',
         ]);
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\{User, Country, Category};
+use App\Models\{User, News, Country, Category, Comment, Like};
 
 class NewsResource extends JsonResource
 {
@@ -17,7 +17,12 @@ class NewsResource extends JsonResource
     {
         $author = User::where('id', $this->author)->first();
         $category = Category::where('id', $this->category)->first();
-        $country = Country::where('id', $this->country)->first();
+        $country = Country::where('id', $this->country)->first(); 
+        $comments = Comment::where('news', $this->id)->get();
+        $connexes = News::where('category', $this->category)->get();
+        $count_like = Like::where('news', $this->id)
+            ->where('is_like', 1)
+            ->count();
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -35,6 +40,9 @@ class NewsResource extends JsonResource
             'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'comments' => $comments,
+            'connexes' => $connexes,
+            'count_like' => $count_like,
         ];
     }
 }

@@ -188,7 +188,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Création de Podcast</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="" lpformnum="1"  method="post" enctype="multipart/form-data" onsubmit="postSubmission()" action="{{ route ('create-podcast')}}">
+                <form class="createform" lpformnum="1"  method="post" enctype="multipart/form-data" onsubmit="postSubmission()" action="{{ route ('create-podcast')}}">
                     <div class="modal-body">
                         @csrf
                         <input type="hidden" name="author" value="{{Auth::user()->id}}">
@@ -260,7 +260,7 @@
                     </div>
                     <div class="modal-footer">
                         <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-bg-secondary">Annuler</button>
-                        <button type="submit" class="btn btn-primary newBtn buttomcreate">Sauvegarder</button>
+                        <button type="submit" class="btn btn-primary newBtn buttoncreate">Sauvegarder</button>
                     </div>
                 </form>
 

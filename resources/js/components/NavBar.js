@@ -7,8 +7,11 @@ import {Button, Container, Form, Nav, Navbar, NavDropdown} from 'react-bootstrap
 import logo from '../assets/img/logo.png';
 import * as Icon from 'react-bootstrap-icons';
 import FadeIn from 'react-fade-in';
-import {LiveSwicht, ListSwicht, listViewAction, DetailSwicht} from '../reducers/actions'
+import {LiveSwicht, ListSwicht, listViewAction, DetailSwicht, LivePlayingSwicht} from '../reducers/actions'
+import  secureLocalStorage  from  "react-secure-storage";
 import {BaseUrl} from '../api/config';
+import Textra from 'react-textra'
+import Parser from 'html-react-parser';
 
 class NavBarBlock extends Component {
     constructor(props){
@@ -31,28 +34,41 @@ class NavBarBlock extends Component {
         this.setState({languevisible:!this.state.languevisible});
     }
 
-    _ListViewDataNav = (item, key) => {
-        const {visibleList, listpagekey} = this.props;
-        if(visibleList == false){
-            ListSwicht(!visibleList);
-        }
-        const data = {
-            'item':item,
-            'key':key
-        };
-        listViewAction(data);
+    _redirectList = async (key) => {
+        const {listpagekey} = this.props;
         if(!listpagekey == 3 || !listpagekey == 4){
             this._toggleProgramme();
-        }
+        }   
+        
+        const data = {
+            'key':key
+        };
+        await secureLocalStorage.setItem('listkey', JSON.stringify(data));
+        window.location.replace(BaseUrl + 'list/');
     }
 
-    _toggleLive = () => {
-        const {visibleLive} = this.props;
-        LiveSwicht(!visibleLive);
+    _redirectDetail = async (id, key) => {
+        const {listpagekey} = this.props;
+        if(!listpagekey == 3 || !listpagekey == 4){
+            this._toggleProgramme();
+        }   
+        
+        const data = {
+            'id':id,
+            'key':key
+        };
+        await secureLocalStorage.setItem('detailkey', JSON.stringify(data));
+        window.location.replace(BaseUrl + 'detail/'+id+'/');
+    }
+
+    _toggleLive = async () => {
+        const {visibleLive,livePlaying} =this.props;
+        await LivePlayingSwicht(!livePlaying);
+        await LiveSwicht(!visibleLive);
     }
 
     render() {
-        const {allprogrammes} = this.props;
+        const {allprogram, flash_info} = this.props;
         return (
             <div>
                 <div className='card infoflash'>
@@ -60,27 +76,30 @@ class NavBarBlock extends Component {
                         <span className='monnaistitle'>Monnais :</span>
                         <div className='defiler'>
                             <marquee className='col-lg-6'>
-                                <span>0,09320,0006RUB/INR</span>
-                                <span>1,40920,01RUB/CNY</span>
-                                <span>0,12090,0009RUB/ZAR</span>
-                                <span>0,28930,0024BRL/RUB</span>
-                                <span>10,75030,0157BRL/INR</span>
-                                <span>15,14890,0221BRL/CNY</span>
-                                <span>1,29970,0017BRL/ZAR</span>
+                                <span>0,09320,0006 RUB/INR <Icon.ArrowDownCircle className='iconcurrency icondown' /></span>
+                                <span>1,40920,01 RUB/CNY <Icon.ArrowUpCircle className='iconcurrency iconup' /></span>
+                                <span>0,12090,0009 RUB/ZAR <Icon.ArrowDownCircle className='iconcurrency icondown' /></span>
+                                <span>0,28930,0024 BRL/RUB <Icon.ArrowDownCircle className='iconcurrency icondown' /></span>
+                                <span>10,75030,0157 BRL/INR <Icon.ArrowUpCircle className='iconcurrency iconup' /></span>
+                                <span>15,14890,0221 BRL/CNY <Icon.ArrowUpCircle className='iconcurrency iconup' /></span>
+                                <span>1,29970,0017 BRL/ZAR <Icon.ArrowUpCircle className='iconcurrency iconup' /></span>
                             </marquee>
-                            <div className='col-lg-6 blocktemperature'> 
-                                <span className='monnaistitle'>Météo : </span>
-                                <marquee>
-                                    <span>Douala 8 °C</span>
-                                    <span>Yaoundé 31 °C</span>
-                                    <span>Bafoussam 28 °C</span>
-                                    <span>Bamenda 36 °C</span>
-                                </marquee>
+
+                            {/* Block News */}
+                            <div className='col-lg-6 blocktopnews'> 
+                                <span className='topinfotitle'>Top Infos : </span>
+                                <div className='topnewscontent'>
+                                    <Textra 
+                                        effect='flash' 
+                                        stopDuartion={4000} 
+                                        data={flash_info} 
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className='blocklangue'> 
-                        <span className='monnaistitle' onClick={this._toggleLangue}>Langue : <span>FR</span> <Icon.ArrowDownCircleFill /></span>
+                        <span className='languagetitle' onClick={this._toggleLangue}>Langue : <span>FR</span> <Icon.ArrowDownCircleFill /></span>
                         {
                             this.state.languevisible ?
                                 <div className='menulangue'>
@@ -104,7 +123,7 @@ class NavBarBlock extends Component {
                         <Navbar.Collapse id="navbarScroll">
                             <Nav className="me-auto my-2 my-lg-0 navitemblock" navbarScroll>
                                 <Nav.Link href="/" active className='itemheader'>Accueil</Nav.Link>
-                                <Nav.Link href="#" className='itemheader' onClick={this._ListViewDataNav.bind(this, null, 3)}>Replay</Nav.Link>
+                                <Nav.Link href="#" className='itemheader' onClick={this._redirectList.bind(this, 3)}>Replay</Nav.Link>
                                 <Nav.Link href="#" className='itemheader' onClick={this._toggleLive}>Direct</Nav.Link>
                                 <Nav.Link href="#" className='itemheader' onClick={this._toggleProgramme}>Programme TV</Nav.Link>
                             </Nav>
@@ -132,14 +151,14 @@ class NavBarBlock extends Component {
                         <FadeIn delay='100' transitionDuration='1000' >
                             <div className='submenusblock'>
                                 {
-                                    allprogrammes ?
-                                        allprogrammes.map((programme, i) => 
+                                    allprogram ?
+                                        allprogram.map((item, i) => 
                                             <div className='itemsubmenu col-lg-3' key={i}>
                                                 <div className='itemcover'>
-                                                    <img src={ BaseUrl + '/storage/' + programme.image} className='imagesubmenu' />
+                                                    <img src={ BaseUrl + 'storage/' + item.cover} className='imagesubmenu' />
                                                     <div className='blocsubmenu'>
-                                                        <a href='#' onClick={this._ListViewDataNav.bind(this, programme.id, 4)}>{programme.title}</a>
-                                                        <p>{programme.description}</p>
+                                                        <a href='#' onClick={this._redirectDetail.bind(this, item.id, 6)}>{item.title}</a>
+                                                        <p>{Parser(item.description.substring(0, 100))}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -157,7 +176,7 @@ class NavBarBlock extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-       ...bindActionCreators({listViewAction, LiveSwicht, ListSwicht, DetailSwicht}, dispatch),
+       ...bindActionCreators({listViewAction, LiveSwicht, ListSwicht, DetailSwicht, LivePlayingSwicht}, dispatch),
      }
  };
 
@@ -165,8 +184,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         listpagekey: state.navigation.listpagekey,
         visibleLive:state.navigation.visibleLive,
+        livePlaying:state.navigation.livePlaying,
         visibleList:state.navigation.visibleList,
-        allprogrammes:state.dataManager.homedata.allprogrammes,
+        allprogram:state.dataManager.homedata.allprogram,
+        flash_info:state.dataManager.flash_info,
     }
   }
 

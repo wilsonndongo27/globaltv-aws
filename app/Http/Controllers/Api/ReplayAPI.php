@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\{ReplayResource};
-use App\Models\{Replay};
+use App\Models\{Replay, User, Comment, Like, Program};
 
 class ReplayAPI extends Controller
 {
@@ -38,6 +38,46 @@ class ReplayAPI extends Controller
             'isfirstpage' => $isfirstpage,
             'hasmorepage' => $hasmorepage,
             'allreplay' => $allreplay,
+            'message' => 'Opération réussi!',
+        ]);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function one_replay($id)
+    {
+        $replay = Replay::where('id', $id)->first();
+        $author = User::where('id', $replay->author)->first();
+        $currentprogram = Program::where('id', $replay->program)->first();
+        $comments = Comment::where('replay', $replay->id)->get();
+        $connexes = Replay::where('program', $replay->program)->get();
+        $count_like = Like::where('replay', $replay->id)
+            ->where('is_like', 1)
+            ->count();
+        $data = [
+            'id' => $replay->id,
+            'title' => $replay->title,
+            'description' => $replay->description,
+            'program' => $currentprogram->title,
+            'programid' => $currentprogram->id,
+            'author' => $author->name,
+            'created_at' => $replay->created_at,
+            'cover' => $replay->cover,
+            'video' => $replay->video,
+            'is_active' => $replay->is_active,
+            'is_valid' => $replay->is_valid,
+            'comments' => $comments,
+            'connexes' => $connexes,
+            'count_like' => $count_like,
+        ];
+        $format_data = json_decode(json_encode($data), FALSE);
+
+        return response([ 
+            'status' => 200,
+            'replay_info' => $format_data,
             'message' => 'Opération réussi!',
         ]);
     }
